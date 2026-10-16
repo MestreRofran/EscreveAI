@@ -1,4 +1,4 @@
-const CACHE='escreveai-1.17';
+const CACHE='escreveai-2.0';
 const LOCAL_CORE=[
   './',
   './index.html',
