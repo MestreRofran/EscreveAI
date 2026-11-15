@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111318">
 <meta name="application-name" content="EscreveAI">
 <meta name="description" content="EscreveAI — ambiente local para criação, edição e publicação de livros.">
-<title>EscreveAI 2.3</title>
+<title>EscreveAI 2.4</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -290,11 +290,55 @@ body:not(.dark) .topLoginStatus21.signedOut{filter:drop-shadow(0 1px 2px #0008)}
 #paragraphMenu22 button{min-height:40px;text-align:left;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--text);font:inherit;font-size:13px}
 #paragraphMenu22 button:active{border-color:var(--primary)}
 @media(min-width:700px){#paragraphMenu22{left:auto;right:18px;bottom:120px;width:420px}}
+
+/* EscreveAI 2.4 — sincronização, leitura, navegação e estatísticas */
+#cloudProgressWrap24{display:none;margin:10px 0 4px}
+#cloudProgressWrap24.show{display:block}
+#cloudProgress24{display:block;width:100%;height:8px;border:0;border-radius:99px;overflow:hidden;accent-color:var(--ok)}
+#cloudProgress24::-webkit-progress-bar{background:var(--surface2);border-radius:99px}
+#cloudProgress24::-webkit-progress-value{background:var(--ok);border-radius:99px}
+#cloudProgress24::-moz-progress-bar{background:var(--ok);border-radius:99px}
+#cloudProgressText24{display:block;margin-top:5px;font-size:11px;color:var(--muted)}
+#cloudDeleteAll24{min-height:40px}
+#bookStatsBtn24{flex:0 0 38px;min-width:38px;color:var(--primary)}
+#previewCounter{cursor:pointer;border:1px solid transparent;border-radius:9px;padding:5px 7px;user-select:none}
+#previewCounter:active,#previewCounter:hover{border-color:var(--line);background:var(--surface2)}
+#bookStatsSheet24{z-index:145}
+#bookStatsSheet24>.bookStatsSheet24{width:min(900px,100%);max-height:94dvh;max-height:94vh;border-radius:25px 25px 0 0}
+.statsSummary24{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.statsCard24{min-width:0;padding:11px;border-radius:13px;background:var(--surface2);border:1px solid var(--line)}
+.statsLabel24{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
+.statsValue24{font-size:19px;font-weight:850;line-height:1.2;overflow-wrap:anywhere}
+.statsSection24{font-size:15px;font-weight:850;margin:18px 0 7px}
+.statsChapter24{border:1px solid var(--line);border-radius:13px;background:var(--surface);margin:8px 0;overflow:hidden}
+.statsChapter24 summary{padding:12px;cursor:pointer;font-weight:750;display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:space-between}
+.statsChapterMeta24{padding:0 12px 10px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;font-size:12px;color:var(--muted)}
+.statsChapterMeta24 b{color:var(--text);font-size:13px}
+.statsChapterText24{padding:12px;border-top:1px solid var(--line);white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6 Georgia,serif;max-height:45vh;overflow:auto;color:var(--text)}
+#pageJumpSheet24{z-index:160;align-items:center;justify-content:center;padding:12px}
+#pageJumpSheet24>.pageJumpSheet24{width:min(470px,100%);max-height:84dvh;border-radius:24px;margin:0;box-shadow:var(--shadow)}
+#pageJumpSheet24 input,#pageJumpSheet24 select{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--text);font:inherit}
+#pageJumpSheet24 .row{padding:12px 2px}
+.editorReaderBar24{display:none;position:absolute;left:8px;right:8px;bottom:52px;z-index:9;min-height:46px;padding:4px 7px;gap:7px;align-items:center;border:1px solid var(--line);border-radius:15px;background:color-mix(in srgb,var(--surface) 96%,transparent);box-shadow:var(--shadow)}
+.editorReaderBar24.show{display:flex}
+.editorReaderStatus24{min-width:0;flex:1;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px}
+.editorReaderBar24 .icon{width:36px;height:36px;min-width:36px;background:var(--surface2)}
+#editorReaderToggle24.readerPaused24,#ttsPause.readerPaused24{background:#229b4b!important;color:#fff!important;border:0!important}
+#ttsPlay{display:none!important}
+#editor.readerShowing24 .editorContentWrap{padding-bottom:58px!important}
+@media(max-width:520px){
+  #bookStatsBtn24{width:34px!important;min-width:34px!important;height:36px!important}
+  .statsSummary24{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .statsValue24{font-size:17px}
+  #pageJumpSheet24{padding:10px}
+  .editorReaderBar24{left:6px;right:6px;bottom:50px;min-height:43px}
+}
+
 </style>
 </head>
 <body class="dark">
 <div class="app" id="app">
-<header class="top"><div class="brand">EscreveAI <span class="ver">2.3</span></div><button class="icon topStatusIcon21 topLoginStatus21" id="topLoginState21" data-tip="Login não efetuado · abrir Login" title="Login não efetuado"></button><button class="icon topStatusIcon21 topDataStatus21" id="topConnDot" data-tip="Pasta não conectada · abrir Dados" title="Pasta não conectada"></button><button class="icon" id="searchBtn" data-tip="Pesquisar livros" title="Pesquisar livros"></button><button class="icon" id="quickSettings" data-tip="Abrir configurações" title="Abrir configurações"></button></header>
+<header class="top"><div class="brand">EscreveAI <span class="ver">2.4</span></div><button class="icon topStatusIcon21 topLoginStatus21" id="topLoginState21" data-tip="Login não efetuado · abrir Login" title="Login não efetuado"></button><button class="icon topStatusIcon21 topDataStatus21" id="topConnDot" data-tip="Pasta não conectada · abrir Dados" title="Pasta não conectada"></button><button class="icon" id="searchBtn" data-tip="Pesquisar livros" title="Pesquisar livros"></button><button class="icon" id="quickSettings" data-tip="Abrir configurações" title="Abrir configurações"></button></header>
 <main class="library" id="library"></main>
 </div>
 <input id="docFile" type="file" multiple accept=".txt,.md,.markdown,.rtf,.html,.htm,.doc,.docx,.odt,.epub,text/plain,text/markdown,text/html,application/rtf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text,application/epub+zip" hidden>
@@ -357,7 +401,7 @@ body:not(.dark) .topLoginStatus21.signedOut{filter:drop-shadow(0 1px 2px #0008)}
 <section class="panel" data-panel="dataCfg">
 <div class="row dataCard21"><div class="dataHead21"><span class="dataIcon21" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10H3z"/></svg></span><div><b>Arquivo local JSON</b><div class="small">Conecte uma pasta para o EscreveAI criar ou reutilizar <b>EscreveAI_dados.json</b>. O arquivo acompanha automaticamente as alterações enquanto a pasta estiver autorizada.</div></div></div><div class="statusline bad" id="jsonStatus" style="margin-top:10px">Pasta não conectada. Os dados estão apenas no cache local de segurança.</div><div class="dataActionGrid21"><button class="btn primary" id="chooseFolder" data-tip="Escolher pasta do arquivo JSON" title="Escolher pasta do arquivo JSON">Escolher pasta</button><button class="btn" id="reconnectFolder" data-tip="Reconectar à última pasta autorizada" title="Reconectar à última pasta autorizada">Reconectar</button><button class="btn" id="refreshJson" data-tip="Atualizar os dados a partir do JSON" title="Atualizar do JSON">Atualizar do JSON</button><button class="btn" id="saveJsonNow" data-tip="Salvar os dados no JSON agora" title="Salvar os dados no JSON agora">Salvar agora</button></div></div>
 <div class="row dataCard21"><div class="dataHead21"><span class="dataIcon21" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 20h14"/><path d="M5 6h4M15 6h4"/></svg></span><div><b>Exportar e importar dados</b><div class="small">Crie um backup completo para guardar, enviar ou abrir em outro aparelho. O arquivo inclui livros, textos, marcadores, capas, imagens incorporadas, fundos e configurações presentes neste aparelho.</div></div></div><div class="dataActionGrid21 dataBackupGrid21"><button class="btn primary" id="exportData21" data-tip="Exportar um backup completo dos dados do EscreveAI" title="Exportar dados">Exportar dados</button><button class="btn" id="importData21" data-tip="Importar um backup completo do EscreveAI" title="Importar dados">Importar dados</button></div><div class="small" id="dataBackupStatus21">O backup é independente do login e da conexão com a pasta.</div></div>
-<div class="row dataCard21" id="cloudBooksCard22"><div class="dataHead21"><span class="dataIcon21" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 16V3m-5 6 5-6 5 6M4 16v4h16v-4"/></svg></span><div><b>Backup individual na nuvem</b><div class="small">Cada livro é enviado separadamente. Textos, versões, marcadores e metadados ficam no Firestore; a capa é comprimida e salva em um documento separado do Firestore (até 900 KB). Imagens inseridas nas páginas não são enviadas para a nuvem e continuam no aparelho e no backup JSON completo.</div></div></div><div class="statusline" id="cloudBooksStatus22" style="margin-top:10px">Entre na sua conta para enviar ou baixar os livros.</div><div class="dataActionGrid21"><button class="btn primary" id="cloudSendBooks22" data-tip="Enviar para a nuvem somente os livros locais novos ou alterados" title="Enviar para a nuvem">Enviar para a nuvem</button><button class="btn" id="cloudDownloadBooks22" data-tip="Baixar livros e configurações da nuvem sem apagar livros exclusivos deste aparelho" title="Baixar da nuvem">Baixar da nuvem</button></div><div class="small">O envio não apaga livros que já estejam somente na nuvem. O download não apaga livros que estejam somente neste aparelho.</div></div>
+<div class="row dataCard21" id="cloudBooksCard22"><div class="dataHead21"><span class="dataIcon21" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 16V3m-5 6 5-6 5 6M4 16v4h16v-4"/></svg></span><div><b>Backup individual na nuvem</b><div class="small">Cada livro é enviado separadamente. Textos, versões, marcadores e metadados ficam no Firestore; a capa é comprimida e salva em um documento separado do Firestore (até 900 KB). Imagens inseridas nas páginas não são enviadas para a nuvem e continuam no aparelho e no backup JSON completo.</div></div></div><div class="statusline" id="cloudBooksStatus22" style="margin-top:10px">Entre na sua conta para sincronizar os livros.</div><div class="dataActionGrid21"><button class="btn primary" id="cloudSendBooks22" data-tip="Enviar para a nuvem somente os livros locais novos ou alterados" title="Enviar para a nuvem">Enviar para a nuvem</button><button class="btn" id="cloudDownloadBooks22" data-tip="Baixar livros e configurações da nuvem sem apagar livros exclusivos deste aparelho" title="Baixar da nuvem">Baixar da nuvem</button></div><div class="small">O envio não apaga livros que já estejam somente na nuvem. O download não apaga livros que estejam somente neste aparelho.</div></div>
 <div class="row dataCard21"><b>Salvamento automático</b><div class="small">Toda alteração — texto, marcador, imagem, ordem na estante, capa, ajuste editorial ou publicação — atualiza o cache local e, quando a pasta está conectada, grava automaticamente no JSON.</div></div>
 <div class="row dataCard21" id="pwaInstallRow"><b>Instalar aplicativo</b><div class="small">Instale o EscreveAI como PWA para abrir como aplicativo no Android.</div><div class="actions"><button class="btn primary" id="installPwa" data-tip="Instalar o aplicativo como PWA" title="Instalar o aplicativo como PWA">Instalar PWA</button></div><div class="small" id="pwaStatus"></div></div>
 <div class="row dataCard21"><div class="actions"><button class="btn" id="clearCache" data-tip="Limpar o cache local sem apagar o JSON" title="Limpar o cache local sem apagar o JSON">Limpar cache local</button><button class="btn danger" id="disconnectFolder" data-tip="Desconectar a pasta de dados" title="Desconectar a pasta de dados">Desconectar pasta</button></div><div class="small">Limpar cache não apaga o JSON conectado. Desconectar a pasta preserva o cache atual no aparelho.</div></div>
@@ -374,10 +418,10 @@ body:not(.dark) .topLoginStatus21.signedOut{filter:drop-shadow(0 1px 2px #0008)}
 <p><b>Imagens:</b> a página selecionada pode receber imagem de página inteira, fundo com transparência ou imagem que interage com o texto (em linha, quadrada, acima/abaixo, atrás ou à frente). A primeira página pode ser usada como capa.</p>
 <p><b>Arquivos:</b> novos projetos podem partir de TXT, Markdown, HTML, RTF, DOCX, ODT e EPUB. O DOC binário antigo é identificado, mas precisa ser convertido para DOCX/RTF/TXT para edição segura no navegador.</p>
 <p><b>Exportação:</b> TXT preserva parágrafos; PDF usa as páginas visíveis; DOCX cria um arquivo Word editável; EPUB cria um e-book básico; HTML preserva a estrutura dos trechos publicados.</p>
-<p><b>Dados:</b> o app mantém cache IndexedDB de segurança e pode salvar no JSON local. Na versão 2.3, o Login permite backup manual individual por livro: texto, marcadores, versões e capas comprimidas (até 900 KB) ficam no Firestore; imagens internas das páginas permanecem no aparelho e no backup JSON completo. Se uma capa não couber no limite, ela permanece apenas no aparelho e no backup JSON.</p>
+<p><b>Dados:</b> o app mantém cache IndexedDB de segurança e pode salvar no JSON local. Na versão 2.4, o Login permite sincronização individual por livro: texto, marcadores, versões e capas comprimidas (até 900 KB) ficam no Firestore; imagens internas das páginas permanecem no aparelho e no backup JSON completo. Se uma capa não couber no limite, ela permanece apenas no aparelho e no backup JSON.</p>
 <p><b>Leitura e voz:</b> o modo de leitura mostra controles padronizados de reproduzir, pausar, parar e navegar. A voz é a do dispositivo e pode usar português do Brasil.</p><p><b>Páginas em miniatura:</b> no livro aberto, o botão de páginas mostra de 3 a 10 miniaturas por linha. É possível visualizar páginas individualmente, agrupadas por marcador ou mostrar rascunhos translúcidos. Segurar uma página permite reordená-la; quando ela pertence a um marcador com texto, o app pergunta se deve mover o marcador inteiro ou somente aquela página.</p><p><b>Marcadores e histórico:</b> capítulos de mesmo nome continuam agrupados; P verde identifica Publicado e R vermelho identifica Rascunho. Segurar o nome de um capítulo permite subir ou descer o grupo. Cada sessão de edição guarda a versão anterior, que pode ser restaurada mesmo depois de sair do editor.</p><p><b>Colagem e revisão:</b> todo texto colado é normalizado para a tipografia do editor, removendo cores, fontes e tamanhos estranhos. O botão Colar oferece manter a estrutura, colar sem formatação ou preservar apenas negrito, itálico e sublinhado. O editor usa português do Brasil e o corretor ortográfico nativo do navegador/teclado.</p><p><b>Arquivos existentes:</b> HTML é aberto como código visível e editável, sem renderizar as tags. Quando o navegador fornece acesso gravável ao arquivo de origem, Salvar permite escolher entre substituir o original ou criar um novo arquivo.</p><p><b>Navegação:</b> o Voltar do Android fecha primeiro a camada atual, depois o editor e depois o livro. Na tela inicial, é necessário apertar Voltar duas vezes para sair do app.</p><p><b>PWA:</b> o app continua preparado para instalação e agora usa o novo ícone EscreveAI nos tamanhos 192 e 512 px.</p>
 </div></details></div>
-<div class="row"><details class="appVersions"><summary><b>Versões do app</b></summary><div class="versionItem"><b>EscreveAI 2.3</b><p><b>Data: 09/11/2026</b><br>Remove a dependência do Firebase Cloud Storage. As capas são preparadas localmente, convertidas para WebP ou JPEG quando necessário e armazenadas como dados binários (Bytes) em documentos separados do Cloud Firestore, com limite de 900 KB por capa. Quando a imagem não pode ser reduzida ao limite ou o envio falha, o texto do livro continua sendo sincronizado e a capa permanece no aparelho e no backup JSON completo. O download recupera a capa diretamente do Firestore. A autenticação e o backup individual por livro continuam usando somente Firebase Authentication e Cloud Firestore.</p></div><div class="versionItem"><b>EscreveAI 2.2</b><p><b>Data: 09/11/2026</b><br>Reestrutura o backup Firebase por livro, com conteúdo textual dividido em partes no Firestore, capas separadas no Cloud Storage e imagens internas das páginas mantidas apenas no backup local/JSON. Adiciona comandos separados para enviar alterações locais e baixar/atualizar dados da nuvem, sem apagar livros que existam somente no aparelho. Marcadores permitem renomear todos os itens ligados ao mesmo título e reorganizar versões dentro do grupo sem alterar a ordem de publicação. O editor recebe opções independentes de recuo, espaçamento entre linhas e entre parágrafos, aplicáveis à seleção ou à página inteira. TXT passa a preservar parágrafos, quebras e recuos de forma textual; a exportação HTML pergunta se deve manter fundos ou usar páginas brancas. Otimiza agrupamento e cache de paginação, carrega imagens sob demanda e reforça o cursor de arraste dos livros no PC.</p></div><div class="versionItem"><b>EscreveAI 2.1</b><p><b>Data: 15/10/2026</b><br>A tela de Login deixa de exibir o caminho técnico interno da conta. A barra principal passa a mostrar um ícone de usuário, branco quando desconectado e verde quando autenticado, abrindo diretamente Login; o antigo ponto de conexão é substituído por uma pasta vermelha ou verde, abrindo diretamente Dados. A área Dados é reorganizada em blocos e recebe Exportar dados e Importar dados para backup completo em JSON, incluindo livros, textos, marcadores, configurações e imagens incorporadas, permitindo levar o conteúdo para outro aparelho independentemente da nuvem.</p></div><div class="versionItem"><b>EscreveAI 2.0</b><p><b>Data: 15/10/2026</b><br>Adiciona Login nas Configurações com Conta Google e E-mail/Senha pelo Firebase Authentication. Quando autenticado, mostra o e-mail com indicador verde e ativa sincronização em nuvem no Cloud Firestore, isolada por UID em /usuarios/{UID}/dados/.... O estado completo do app é salvo em blocos versionados para suportar projetos maiores e imagens, mantendo também cache local e JSON. Após o login bem-sucedido, exibe boas-vindas e retorna à tela principal de Ajustes do APP.</p></div><div class="versionItem"><b>EscreveAI 1.17</b><p><b>Data: 14/10/2026</b><br>Marcadores ganha um modo dedicado de movimentação: um botão ↑↓ antes de Fechar ativa ou desativa o gesto de segurar para mover capítulos. O modo inicia desligado para priorizar toque e rolagem normais, fica verde enquanto ativo e é desativado automaticamente ao sair da tela de Marcadores.</p></div><div class="versionItem"><b>EscreveAI 1.16</b><p><b>Data: 14/10/2026</b><br>Movimentação entre estantes passa a perguntar se o livro permanece nas duas ou somente na nova, mantendo Livros em criação e Livros abandonados mutuamente exclusivos entre si. Novo livro sem título recebe automaticamente Novo Livro 1, 2, 3... conforme a maior numeração existente. Aparência ganha prévia transparente ao ajustar o tamanho dos livros, mostrando a estante ao fundo. Configurações e Marcadores passam a usar etapas próprias no histórico do navegador, corrigindo o Voltar do Android; a bolinha de conexão abre diretamente Dados e volta à tela principal. Dicas por toque prolongado permanecem visíveis enquanto o botão estiver pressionado. O gesto de arrastar Marcadores recebe área de toque maior, tolerância a tremor e reconhecimento vertical reforçado.</p></div><div class="versionItem"><b>EscreveAI 1.15</b><p><b>Data: 14/10/2026</b><br>Ajustes do APP passa a funcionar como uma área própria em tela cheia: a tela inicial de Configurações mostra Aparência, Escrita, Leitor, Voz, Dados e Sobre em cartões com ícones e descrição; tocar em um cartão abre aquela categoria também em tela cheia, com seta superior esquerda para retornar à tela principal das Configurações. Enquanto Configurações estiver aberta, gestos, arrastes e inércia da biblioteca/telas de fundo ficam isolados e não recebem o movimento feito dentro dos ajustes.</p></div><div class="versionItem"><b>EscreveAI 1.14</b><p><b>Data: 14/10/2026</b><br>Novo livro passa a solicitar título e autor antes da criação. Marcadores recebem arraste vertical reforçado, com prévia flutuante, auto-rolagem e indicador de inserção; edição aberta pelos Marcadores retorna à mesma posição da lista; Anterior/Próximo do editor passa a seguir exatamente a ordem exibida nos Marcadores. Reconexão da pasta passa a comparar a data da última alteração do cache e do JSON e mantém automaticamente o estado mais recente, substituindo o mais antigo. Nos Marcadores, Restaurar save anterior é substituído por Criar cópia, sempre gerando nova versão em rascunho. Ajustes do APP passa a apresentar Aparência, Escrita, Leitor, Voz, Dados e Sobre como cartões separados, mantendo o conteúdo e as funções existentes.</p></div><div class="versionItem"><b>EscreveAI 1.13</b><p><b>Data: 10/10/2026</b><br>Correção das exportações avançadas: PDF Publicação passa a obter uma instância vetorial de jsPDF diretamente quando disponível ou pela instância interna do html2pdf como fallback, eliminando o aviso de componente vetorial inexistente nos navegadores compatíveis. DOCX e EPUB passam a gerar o pacote ZIP interno exigido por esses formatos, mas entregam o arquivo final com MIME e extensão próprios (.docx e .epub), evitando que o Android os trate como ZIP genérico.</p></div><div class="versionItem"><b>EscreveAI 1.12</b><p><b>Data: 10/10/2026</b><br>Exportações editoriais revisadas: PDF passa a oferecer dois modos — Publicação, com texto real pesquisável/selecionável sobre imagens em alta qualidade, e Cópia visual, preservando a captura fiel da página. DOCX passa a gerar documento editável com estrutura de capítulos, subtítulos, estilos, tamanho de página, margens, formatação básica e imagens incorporadas. EPUB passa a ser fluido e semântico, dividido por capítulos, com sumário navegável, capa, estilos responsivos e imagens incorporadas ao pacote.</p></div><div class="versionItem"><b>EscreveAI 1.11</b><p><b>Data: 10/10/2026</b><br>Corrigida definitivamente a escolha de Fundo da página: o modo e o escopo permanecem selecionados mesmo antes de escolher a imagem. Mantidos os sete escopos de fundo. A exportação PDF passa a preparar imagens de página/fundo com encaixe proporcional equivalente ao app, evitando distorção lateral, captura cada página individualmente e exibe progresso visível com página atual e porcentagem durante a renderização.</p></div><div class="versionItem"><b>EscreveAI 1.10</b><p><b>Data: 10/10/2026</b><br>Corrigida a escolha do escopo da imagem de fundo, mantendo a opção selecionada mesmo quando a página atual não pertence ao novo escopo. Confirmados os sete escopos: somente página atual, pares, ímpares, todas as páginas do marcador, primeira página do marcador, última página do marcador e todas as páginas do livro. Revisadas as exportações: TXT preserva estrutura textual; HTML passa a exportar as páginas renderizadas; DOCX preserva estrutura editorial básica, página, margens, capítulos e subtítulos; EPUB recebe estrutura e estilos editoriais; e PDF foi refeito para exportar as páginas renderizadas, com cores, imagens, fundos, numeração, ordem e dimensões, evitando a captura fora da tela que podia gerar PDF em branco.</p></div><div class="versionItem"><b>EscreveAI 1.9</b><p><b>Data: 09/10/2026</b><br>“Justificar sem quebrar palavras” passa a ser o padrão editorial e também pode ser escolhido em Ajustes do APP &gt; Escrita, mantendo disponível a alternativa com quebra inteligente. Imagens usadas como fundo de página ganham escopos persistentes: página atual, pares, ímpares, todas as páginas do marcador, primeira ou última página do marcador e todas as páginas do livro. PWA atualizado para a versão 1.9 com entrada index.html, manifesto, service worker e ícones oficiais.</p></div><div class="versionItem"><b>EscreveAI 1.8</b><p><b>Data: 09/10/2026</b><br>Correção pontual do editor: o botão de imagem passa a abrir as opções da página acima da tela de edição, sem sair do editor, mantendo ocultas as opções de capa. O modo “Justificar sem quebrar palavras” passa a ser aplicado também à página efetivamente renderizada e exportada, desativando hifenização e quebra interna de palavras em todos os elementos de texto, além da medição da paginação.</p></div><div class="versionItem"><b>EscreveAI 1.7</b><p><b>Data: 09/10/2026</b><br>Imagens das páginas passam a ficar vinculadas à identidade lógica da folha (marcador + parte) em vez do número momentâneo da página, preservando sua posição quando capítulos ou marcadores são reordenados. Corrigida a seleção de “Justificar sem quebrar palavras”, publicação P verde nos Marcadores, Versões do app recolhida por padrão e remoção de livro ao soltar sobre Ajustes do APP com opção de exportar antes. O editor recebe um botão de imagem ao lado da lupa, abrindo somente as opções de imagem da folha, sem capa.</p></div><div class="versionItem"><b>EscreveAI 1.6</b><p><b>Data: 09/10/2026</b><br>Revisão estrutural de marcadores, Filhos e ordem de publicação; correção da duplicação de marcadores; Filho passa a ser uma condição permanente ligada ao marcador-mãe, com estado Publicado/Rascunho independente. A ordem publicada passa a reger novamente a sequência do livro e foi adicionado um comando para restaurar a ordem correta das páginas. Aparência ganha dois modos de justificação de linha, com ou sem quebra inteligente de palavras, preservando pontuação. Páginas do livro bloqueia seleção/menu de contexto de imagens durante o gesto e remove a pilha/sombra da visão por marcador. Localizar passa a centralizar precisamente cada ocorrência e as dicas por toque prolongado são reforçadas em todos os botões de comando.</p></div><div class="versionItem"><b>EscreveAI 1.5</b><p><b>Data: 09/10/2026</b><br>Paginação refeita para impedir perda de conteúdo ao alterar fonte, espaçamento, margens ou o próprio texto, com criação e remoção automática de páginas e cortes preferencialmente entre palavras sem separar pontuação. Páginas do livro recebe arraste mais seguro sobre imagens, linha azul de inserção e pilhas de marcadores mais discretas e compatíveis com o tema escuro. Localizar/substituir passa a manter foco durante a digitação e oferece barra flutuante de navegação sem chamar o teclado nas setas. Desfazer/Refazer e R+ mostram corretamente o estado inativo; colagem respeita o tema; tooltips por toque prolongado são reforçados; botões do editor não chamam o teclado; corretor usa a marcação nativa PT-BR com sublinhado vermelho explícito.</p></div><div class="versionItem"><b>EscreveAI 1.4</b><p><b>Data: 09/10/2026</b><br>Correções estruturais no editor e paginação: recuo e capitular aplicados de forma efetiva; repaginação adaptativa ao alterar formato, fonte, tamanho, espaçamento e escopos; HTML sempre tratado como código literal; editor estabilizado sem deslocamento dos controles e sem teclado ao tocar em comandos; Salvar e Clonar no topo; histórico persistente maior para desfazer/refazer; R+ com seleção preservada; Lupa e Colar acima do editor; subtítulo oculto ao sair do campo e opção de usá-lo como título; miniaturas passam a reproduzir a página real e arraste mostra página flutuante; melhorias de corretor e feedback de arraste na estante.</p></div><div class="versionItem"><b>EscreveAI 1.3</b><p><b>Data: 09/10/2026</b><br>Correção da paginação para preservar ENTERs, parágrafos, linhas e formatação; novo Justificar total opcional; padrões de visualização salváveis; recuo de primeira linha configurável, capitular e três modos de título de capítulo; subtexto de capítulo; HTML editado como código literal; navegação de retorno por contexto; edição a partir da miniatura/página atual; arraste real de capítulos e páginas; marcadores simplificados; corretor ortográfico alternável; localizar/substituir; barra superior do editor reorganizada e salvamento em ícone de disquete.</p></div><div class="versionItem"><b>EscreveAI 1.2</b><p><b>Data: 08/10/2026</b><br>Padronização visual de botões e ícones sem emojis; dicas por mouse/segurar; navegador de páginas com 3–10 miniaturas por linha, visual por marcador e rascunhos translúcidos; reordenação de páginas ou marcadores; ordem dos capítulos editável; histórico de edição restaurável; colagem normalizada e botão de colagem com três modos; barra de formatação reposicionada; status P/R dos marcadores; navegação Voltar do Android em camadas; botão de edição direta alterado para + verde; botão de imagem/capa aprimorado; HTML permanece código durante a edição; novo ícone EscreveAI aplicado ao PWA.</p></div><div class="versionItem"><b>EscreveAI 1.1</b><p><b>Data: 07/10/2026</b><br>Estante e gestos alinhados ao Bibliotheka 1.36; livros e etiquetas encostados corretamente nas prateleiras; paginação editorial refeita pela área real da folha; título e texto passam a compartilhar corretamente a primeira página; modo de leitura com Play/Pause/Parar; controles visuais reunidos em Aa com escopo por páginas; marcadores agrupados com editar/excluir/publicar ou voltar a rascunho; editor com desfazer/refazer, clone de versão, corretor PT-BR e Rascunho à parte integrado à barra; melhorias de voltar do Android, salvamento de arquivos existentes e abertura de HTML como código.</p></div><div class="versionItem"><b>EscreveAI 1.0</b><p><b>Data: 07/10/2026</b><br>Criação do EscreveAI a partir da estrutura visual e de estantes do Bibliotheka 1.36, com ambiente de escrita editorial, marcadores/versionamento, rascunhos e Filhos, imagens por página, exportação, PWA e persistência automática em pasta/JSON inspirada no Financi.</p></div></details></div>
+<div class="row"><details class="appVersions"><summary><b>Versões do app</b></summary><div class="versionItem"><b>EscreveAI 2.4</b><p><b>Data: 15/11/2026</b><br>Reestrutura a sincronização Firebase para comparar cada livro individualmente e transferir somente a versão mais recente, independentemente do botão utilizado; remove a sincronização global antiga que concorria com o backup por livro; inclui exclusão confirmada dos dados do EscreveAI na nuvem, sem apagar os dados locais ou a conta; adiciona leitura em voz alta no editor com pausa e continuação; transforma o Pause do leitor do livro em Play verde durante a pausa; permite navegar por número de página ou capítulo; adiciona painel de estatísticas por capítulo e livro; reduz atualizações repetidas durante a digitação e reaproveita a tela de marcadores quando nada mudou.</p></div><div class="versionItem"><b>EscreveAI 2.3</b><p><b>Data: 09/11/2026</b><br>Remove a dependência do Firebase Cloud Storage. As capas são preparadas localmente, convertidas para WebP ou JPEG quando necessário e armazenadas como dados binários (Bytes) em documentos separados do Cloud Firestore, com limite de 900 KB por capa. Quando a imagem não pode ser reduzida ao limite ou o envio falha, o texto do livro continua sendo sincronizado e a capa permanece no aparelho e no backup JSON completo. O download recupera a capa diretamente do Firestore. A autenticação e o backup individual por livro continuam usando somente Firebase Authentication e Cloud Firestore.</p></div><div class="versionItem"><b>EscreveAI 2.2</b><p><b>Data: 09/11/2026</b><br>Reestrutura o backup Firebase por livro, com conteúdo textual dividido em partes no Firestore, capas separadas no Cloud Storage e imagens internas das páginas mantidas apenas no backup local/JSON. Adiciona comandos separados para enviar alterações locais e baixar/atualizar dados da nuvem, sem apagar livros que existam somente no aparelho. Marcadores permitem renomear todos os itens ligados ao mesmo título e reorganizar versões dentro do grupo sem alterar a ordem de publicação. O editor recebe opções independentes de recuo, espaçamento entre linhas e entre parágrafos, aplicáveis à seleção ou à página inteira. TXT passa a preservar parágrafos, quebras e recuos de forma textual; a exportação HTML pergunta se deve manter fundos ou usar páginas brancas. Otimiza agrupamento e cache de paginação, carrega imagens sob demanda e reforça o cursor de arraste dos livros no PC.</p></div><div class="versionItem"><b>EscreveAI 2.1</b><p><b>Data: 15/10/2026</b><br>A tela de Login deixa de exibir o caminho técnico interno da conta. A barra principal passa a mostrar um ícone de usuário, branco quando desconectado e verde quando autenticado, abrindo diretamente Login; o antigo ponto de conexão é substituído por uma pasta vermelha ou verde, abrindo diretamente Dados. A área Dados é reorganizada em blocos e recebe Exportar dados e Importar dados para backup completo em JSON, incluindo livros, textos, marcadores, configurações e imagens incorporadas, permitindo levar o conteúdo para outro aparelho independentemente da nuvem.</p></div><div class="versionItem"><b>EscreveAI 2.0</b><p><b>Data: 15/10/2026</b><br>Adiciona Login nas Configurações com Conta Google e E-mail/Senha pelo Firebase Authentication. Quando autenticado, mostra o e-mail com indicador verde e ativa sincronização em nuvem no Cloud Firestore, isolada por UID em /usuarios/{UID}/dados/.... O estado completo do app é salvo em blocos versionados para suportar projetos maiores e imagens, mantendo também cache local e JSON. Após o login bem-sucedido, exibe boas-vindas e retorna à tela principal de Ajustes do APP.</p></div><div class="versionItem"><b>EscreveAI 1.17</b><p><b>Data: 14/10/2026</b><br>Marcadores ganha um modo dedicado de movimentação: um botão ↑↓ antes de Fechar ativa ou desativa o gesto de segurar para mover capítulos. O modo inicia desligado para priorizar toque e rolagem normais, fica verde enquanto ativo e é desativado automaticamente ao sair da tela de Marcadores.</p></div><div class="versionItem"><b>EscreveAI 1.16</b><p><b>Data: 14/10/2026</b><br>Movimentação entre estantes passa a perguntar se o livro permanece nas duas ou somente na nova, mantendo Livros em criação e Livros abandonados mutuamente exclusivos entre si. Novo livro sem título recebe automaticamente Novo Livro 1, 2, 3... conforme a maior numeração existente. Aparência ganha prévia transparente ao ajustar o tamanho dos livros, mostrando a estante ao fundo. Configurações e Marcadores passam a usar etapas próprias no histórico do navegador, corrigindo o Voltar do Android; a bolinha de conexão abre diretamente Dados e volta à tela principal. Dicas por toque prolongado permanecem visíveis enquanto o botão estiver pressionado. O gesto de arrastar Marcadores recebe área de toque maior, tolerância a tremor e reconhecimento vertical reforçado.</p></div><div class="versionItem"><b>EscreveAI 1.15</b><p><b>Data: 14/10/2026</b><br>Ajustes do APP passa a funcionar como uma área própria em tela cheia: a tela inicial de Configurações mostra Aparência, Escrita, Leitor, Voz, Dados e Sobre em cartões com ícones e descrição; tocar em um cartão abre aquela categoria também em tela cheia, com seta superior esquerda para retornar à tela principal das Configurações. Enquanto Configurações estiver aberta, gestos, arrastes e inércia da biblioteca/telas de fundo ficam isolados e não recebem o movimento feito dentro dos ajustes.</p></div><div class="versionItem"><b>EscreveAI 1.14</b><p><b>Data: 14/10/2026</b><br>Novo livro passa a solicitar título e autor antes da criação. Marcadores recebem arraste vertical reforçado, com prévia flutuante, auto-rolagem e indicador de inserção; edição aberta pelos Marcadores retorna à mesma posição da lista; Anterior/Próximo do editor passa a seguir exatamente a ordem exibida nos Marcadores. Reconexão da pasta passa a comparar a data da última alteração do cache e do JSON e mantém automaticamente o estado mais recente, substituindo o mais antigo. Nos Marcadores, Restaurar save anterior é substituído por Criar cópia, sempre gerando nova versão em rascunho. Ajustes do APP passa a apresentar Aparência, Escrita, Leitor, Voz, Dados e Sobre como cartões separados, mantendo o conteúdo e as funções existentes.</p></div><div class="versionItem"><b>EscreveAI 1.13</b><p><b>Data: 10/10/2026</b><br>Correção das exportações avançadas: PDF Publicação passa a obter uma instância vetorial de jsPDF diretamente quando disponível ou pela instância interna do html2pdf como fallback, eliminando o aviso de componente vetorial inexistente nos navegadores compatíveis. DOCX e EPUB passam a gerar o pacote ZIP interno exigido por esses formatos, mas entregam o arquivo final com MIME e extensão próprios (.docx e .epub), evitando que o Android os trate como ZIP genérico.</p></div><div class="versionItem"><b>EscreveAI 1.12</b><p><b>Data: 10/10/2026</b><br>Exportações editoriais revisadas: PDF passa a oferecer dois modos — Publicação, com texto real pesquisável/selecionável sobre imagens em alta qualidade, e Cópia visual, preservando a captura fiel da página. DOCX passa a gerar documento editável com estrutura de capítulos, subtítulos, estilos, tamanho de página, margens, formatação básica e imagens incorporadas. EPUB passa a ser fluido e semântico, dividido por capítulos, com sumário navegável, capa, estilos responsivos e imagens incorporadas ao pacote.</p></div><div class="versionItem"><b>EscreveAI 1.11</b><p><b>Data: 10/10/2026</b><br>Corrigida definitivamente a escolha de Fundo da página: o modo e o escopo permanecem selecionados mesmo antes de escolher a imagem. Mantidos os sete escopos de fundo. A exportação PDF passa a preparar imagens de página/fundo com encaixe proporcional equivalente ao app, evitando distorção lateral, captura cada página individualmente e exibe progresso visível com página atual e porcentagem durante a renderização.</p></div><div class="versionItem"><b>EscreveAI 1.10</b><p><b>Data: 10/10/2026</b><br>Corrigida a escolha do escopo da imagem de fundo, mantendo a opção selecionada mesmo quando a página atual não pertence ao novo escopo. Confirmados os sete escopos: somente página atual, pares, ímpares, todas as páginas do marcador, primeira página do marcador, última página do marcador e todas as páginas do livro. Revisadas as exportações: TXT preserva estrutura textual; HTML passa a exportar as páginas renderizadas; DOCX preserva estrutura editorial básica, página, margens, capítulos e subtítulos; EPUB recebe estrutura e estilos editoriais; e PDF foi refeito para exportar as páginas renderizadas, com cores, imagens, fundos, numeração, ordem e dimensões, evitando a captura fora da tela que podia gerar PDF em branco.</p></div><div class="versionItem"><b>EscreveAI 1.9</b><p><b>Data: 09/10/2026</b><br>“Justificar sem quebrar palavras” passa a ser o padrão editorial e também pode ser escolhido em Ajustes do APP &gt; Escrita, mantendo disponível a alternativa com quebra inteligente. Imagens usadas como fundo de página ganham escopos persistentes: página atual, pares, ímpares, todas as páginas do marcador, primeira ou última página do marcador e todas as páginas do livro. PWA atualizado para a versão 1.9 com entrada index.html, manifesto, service worker e ícones oficiais.</p></div><div class="versionItem"><b>EscreveAI 1.8</b><p><b>Data: 09/10/2026</b><br>Correção pontual do editor: o botão de imagem passa a abrir as opções da página acima da tela de edição, sem sair do editor, mantendo ocultas as opções de capa. O modo “Justificar sem quebrar palavras” passa a ser aplicado também à página efetivamente renderizada e exportada, desativando hifenização e quebra interna de palavras em todos os elementos de texto, além da medição da paginação.</p></div><div class="versionItem"><b>EscreveAI 1.7</b><p><b>Data: 09/10/2026</b><br>Imagens das páginas passam a ficar vinculadas à identidade lógica da folha (marcador + parte) em vez do número momentâneo da página, preservando sua posição quando capítulos ou marcadores são reordenados. Corrigida a seleção de “Justificar sem quebrar palavras”, publicação P verde nos Marcadores, Versões do app recolhida por padrão e remoção de livro ao soltar sobre Ajustes do APP com opção de exportar antes. O editor recebe um botão de imagem ao lado da lupa, abrindo somente as opções de imagem da folha, sem capa.</p></div><div class="versionItem"><b>EscreveAI 1.6</b><p><b>Data: 09/10/2026</b><br>Revisão estrutural de marcadores, Filhos e ordem de publicação; correção da duplicação de marcadores; Filho passa a ser uma condição permanente ligada ao marcador-mãe, com estado Publicado/Rascunho independente. A ordem publicada passa a reger novamente a sequência do livro e foi adicionado um comando para restaurar a ordem correta das páginas. Aparência ganha dois modos de justificação de linha, com ou sem quebra inteligente de palavras, preservando pontuação. Páginas do livro bloqueia seleção/menu de contexto de imagens durante o gesto e remove a pilha/sombra da visão por marcador. Localizar passa a centralizar precisamente cada ocorrência e as dicas por toque prolongado são reforçadas em todos os botões de comando.</p></div><div class="versionItem"><b>EscreveAI 1.5</b><p><b>Data: 09/10/2026</b><br>Paginação refeita para impedir perda de conteúdo ao alterar fonte, espaçamento, margens ou o próprio texto, com criação e remoção automática de páginas e cortes preferencialmente entre palavras sem separar pontuação. Páginas do livro recebe arraste mais seguro sobre imagens, linha azul de inserção e pilhas de marcadores mais discretas e compatíveis com o tema escuro. Localizar/substituir passa a manter foco durante a digitação e oferece barra flutuante de navegação sem chamar o teclado nas setas. Desfazer/Refazer e R+ mostram corretamente o estado inativo; colagem respeita o tema; tooltips por toque prolongado são reforçados; botões do editor não chamam o teclado; corretor usa a marcação nativa PT-BR com sublinhado vermelho explícito.</p></div><div class="versionItem"><b>EscreveAI 1.4</b><p><b>Data: 09/10/2026</b><br>Correções estruturais no editor e paginação: recuo e capitular aplicados de forma efetiva; repaginação adaptativa ao alterar formato, fonte, tamanho, espaçamento e escopos; HTML sempre tratado como código literal; editor estabilizado sem deslocamento dos controles e sem teclado ao tocar em comandos; Salvar e Clonar no topo; histórico persistente maior para desfazer/refazer; R+ com seleção preservada; Lupa e Colar acima do editor; subtítulo oculto ao sair do campo e opção de usá-lo como título; miniaturas passam a reproduzir a página real e arraste mostra página flutuante; melhorias de corretor e feedback de arraste na estante.</p></div><div class="versionItem"><b>EscreveAI 1.3</b><p><b>Data: 09/10/2026</b><br>Correção da paginação para preservar ENTERs, parágrafos, linhas e formatação; novo Justificar total opcional; padrões de visualização salváveis; recuo de primeira linha configurável, capitular e três modos de título de capítulo; subtexto de capítulo; HTML editado como código literal; navegação de retorno por contexto; edição a partir da miniatura/página atual; arraste real de capítulos e páginas; marcadores simplificados; corretor ortográfico alternável; localizar/substituir; barra superior do editor reorganizada e salvamento em ícone de disquete.</p></div><div class="versionItem"><b>EscreveAI 1.2</b><p><b>Data: 08/10/2026</b><br>Padronização visual de botões e ícones sem emojis; dicas por mouse/segurar; navegador de páginas com 3–10 miniaturas por linha, visual por marcador e rascunhos translúcidos; reordenação de páginas ou marcadores; ordem dos capítulos editável; histórico de edição restaurável; colagem normalizada e botão de colagem com três modos; barra de formatação reposicionada; status P/R dos marcadores; navegação Voltar do Android em camadas; botão de edição direta alterado para + verde; botão de imagem/capa aprimorado; HTML permanece código durante a edição; novo ícone EscreveAI aplicado ao PWA.</p></div><div class="versionItem"><b>EscreveAI 1.1</b><p><b>Data: 07/10/2026</b><br>Estante e gestos alinhados ao Bibliotheka 1.36; livros e etiquetas encostados corretamente nas prateleiras; paginação editorial refeita pela área real da folha; título e texto passam a compartilhar corretamente a primeira página; modo de leitura com Play/Pause/Parar; controles visuais reunidos em Aa com escopo por páginas; marcadores agrupados com editar/excluir/publicar ou voltar a rascunho; editor com desfazer/refazer, clone de versão, corretor PT-BR e Rascunho à parte integrado à barra; melhorias de voltar do Android, salvamento de arquivos existentes e abertura de HTML como código.</p></div><div class="versionItem"><b>EscreveAI 1.0</b><p><b>Data: 07/10/2026</b><br>Criação do EscreveAI a partir da estrutura visual e de estantes do Bibliotheka 1.36, com ambiente de escrita editorial, marcadores/versionamento, rascunhos e Filhos, imagens por página, exportação, PWA e persistência automática em pasta/JSON inspirada no Financi.</p></div></details></div>
 </section>
 </div></div>
 
@@ -419,7 +463,7 @@ body:not(.dark) .topLoginStatus21.signedOut{filter:drop-shadow(0 1px 2px #0008)}
 <div class="overlay pageReadOverlay" id="pageReadSheet"><div class="sheet pageReadSheet"><div class="sheetHead"><h2 id="pageReadTitle">Página</h2><div class="sheetHeadActions"><button class="icon" id="pageReadEdit" data-tip="Editar o texto a partir desta página"></button><button class="icon close" data-tip="Fechar a página"></button></div></div><div id="pageReadHost"></div></div></div>
 <div class="writer" id="writer"><div class="writerTop">
 <button class="icon" id="writerBack" data-tip="Voltar para a estante"></button><div class="writerTitle" id="writerTitle"></div>
-<button class="icon imageAction" id="imageBtn" data-tip="Capa e imagens: escolher capa e imagens das páginas"></button>
+<button class="icon" id="bookStatsBtn24" data-tip="Dados e estatísticas do livro" title="Dados e estatísticas do livro"></button><button class="icon imageAction" id="imageBtn" data-tip="Capa e imagens: escolher capa e imagens das páginas"></button>
 <button class="icon" id="readerModeBtn" data-tip="Modo de leitura em voz alta"></button>
 <button class="icon saveIcon" id="saveBookBtn" data-tip="Salvar ou exportar o livro"></button>
 </div><div class="writerBody" id="writerBody"></div>
@@ -435,14 +479,32 @@ body:not(.dark) .topLoginStatus21.signedOut{filter:drop-shadow(0 1px 2px #0008)}
 
 <div class="editor" id="editor"><div class="editorTop"><button class="icon" id="editorBack" data-tip="Voltar para a tela anterior"></button><div class="editorName" id="editorName">Escrita</div><span class="editorAutosave small" id="autosaveState">Salvo automaticamente</span><button class="icon primarySave" id="editorSave" data-tip="Salvar este marcador"></button><button class="icon" id="cloneMarkerBtn" data-tip="Criar uma cópia como próxima versão"></button></div>
 <div class="editorMeta"><div class="chapterMeta"><input id="markerTitle" placeholder="Capítulo / título"><input id="markerSubtitle" class="markerSubtitle" placeholder="Subtexto do capítulo (opcional)"></div><input id="markerVersion" placeholder="Versão"><select id="markerStatus"><option value="published">Publicado</option><option value="draft">Rascunho</option></select></div>
-<div class="editorActionStrip"><div class="editorActionsLeft"><button id="editorUndo" data-tip="Desfazer alterações, inclusive de sessões anteriores"></button><button id="editorRedo" data-tip="Refazer alterações desfeitas"></button><button class="selectionDraft" id="selectionDraft" data-tip="Transformar a seleção em Rascunho à parte" disabled>R+</button><button id="deleteMarker" class="dangerIcon" data-tip="Excluir este marcador"></button></div><div class="editorActionsRight"><button class="icon" id="editorPrev" data-tip="Marcador anterior"></button><button class="icon" id="editorNext" data-tip="Próximo marcador"></button><button class="icon" id="editorFindBtn" data-tip="Localizar e substituir"></button><button class="icon imageAction" id="editorImageBtn" data-tip="Adicionar ou ajustar imagem nesta página"></button><button class="icon" id="editorHistoryBtn" style="display:none!important" aria-hidden="true" data-tip="Restaurar o save anterior"></button><button class="btn primary" id="editorPublish" style="display:none!important" aria-hidden="true" data-tip="Salvar alterações do marcador">Salvar</button></div></div>
-<div class="editorContentWrap"><div class="editorContent" id="editorContent" contenteditable="true" spellcheck="true" lang="pt-BR" autocapitalize="sentences" autocorrect="on"></div></div>
+<div class="editorActionStrip"><div class="editorActionsLeft"><button id="editorUndo" data-tip="Desfazer alterações, inclusive de sessões anteriores"></button><button id="editorRedo" data-tip="Refazer alterações desfeitas"></button><button class="selectionDraft" id="selectionDraft" data-tip="Transformar a seleção em Rascunho à parte" disabled>R+</button><button id="deleteMarker" class="dangerIcon" data-tip="Excluir este marcador"></button></div><div class="editorActionsRight"><button class="icon" id="editorPrev" data-tip="Marcador anterior"></button><button class="icon" id="editorNext" data-tip="Próximo marcador"></button><button class="icon" id="editorFindBtn" data-tip="Localizar e substituir"></button><button class="icon" id="editorReaderBtn24" data-tip="Ler o texto deste editor em voz alta" title="Ler o texto deste editor em voz alta"></button><button class="icon imageAction" id="editorImageBtn" data-tip="Adicionar ou ajustar imagem nesta página"></button><button class="icon" id="editorHistoryBtn" style="display:none!important" aria-hidden="true" data-tip="Restaurar o save anterior"></button><button class="btn primary" id="editorPublish" style="display:none!important" aria-hidden="true" data-tip="Salvar alterações do marcador">Salvar</button></div></div>
+<div class="editorReaderBar24" id="editorReaderBar24" aria-live="polite"><span class="editorReaderStatus24" id="editorReaderStatus24">Pronto para ler</span><button class="icon" id="editorReaderToggle24" data-tip="Iniciar leitura" aria-label="Iniciar leitura"></button><button class="icon" id="editorReaderStop24" data-tip="Parar leitura" aria-label="Parar leitura"></button></div><div class="editorContentWrap"><div class="editorContent" id="editorContent" contenteditable="true" spellcheck="true" lang="pt-BR" autocapitalize="sentences" autocorrect="on"></div></div>
 <div class="editorToolbar"><button data-cmd="bold" data-tip="Negrito"><b>B</b></button><button data-cmd="italic" data-tip="Itálico"><i>I</i></button><button data-cmd="underline" data-tip="Sublinhado"><u>U</u></button><button data-cmd="formatBlock" data-value="h2" data-tip="Alternar título de capítulo / formatação anterior">H2</button><button id="paragraphOptions22" data-tip="Opções de parágrafo e espaçamento" title="Opções de parágrafo e espaçamento">¶</button><button data-cmd="insertUnorderedList" data-tip="Lista com marcadores">≡</button><button id="clearFormat" data-tip="Limpar formatação">Tx</button><button id="pasteBtn" data-tip="Colar com controle de formatação"></button><button id="editorProof" class="proofBtn" data-tip="Ativar ou desativar corretor ortográfico PT-BR">abc</button></div></div>
+
+<div class="overlay" id="bookStatsSheet24" role="dialog" aria-modal="true" aria-labelledby="bookStatsTitle24">
+  <div class="sheet bookStatsSheet24">
+    <div class="sheetHead"><h2 id="bookStatsTitle24">Dados do livro</h2><button class="icon close" data-tip="Fechar dados do livro" aria-label="Fechar"></button></div>
+    <div class="small" id="bookStatsSubtitle24"></div>
+    <div id="bookStatsContent24"><div class="notice">Abra os dados para calcular as estatísticas.</div></div>
+  </div>
+</div>
+<div class="overlay" id="pageJumpSheet24" role="dialog" aria-modal="true" aria-labelledby="pageJumpTitle24">
+  <div class="sheet pageJumpSheet24">
+    <div class="sheetHead"><h2 id="pageJumpTitle24">Ir para página ou capítulo</h2><button class="icon close" data-tip="Fechar navegação" aria-label="Fechar"></button></div>
+    <div class="row"><label for="pageJumpNumber24">Número da página</label><input id="pageJumpNumber24" type="number" min="1" step="1" inputmode="numeric" placeholder="Digite a página"></div>
+    <div class="row"><label for="pageJumpChapter24">Ou escolha um capítulo</label><select id="pageJumpChapter24"><option value="">Selecione um capítulo</option></select></div>
+    <div class="small" id="pageJumpCount24"></div>
+    <div class="actions"><button class="btn primary" id="pageJumpGoNumber24">Ir para página</button><button class="btn" id="pageJumpGoChapter24">Ir para capítulo</button></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 (()=>{'use strict';
-const VERSION='2.3',APP='EscreveAI',JSON_NAME='EscreveAI_dados.json',CACHE_DB='EscreveAICacheDB',HANDLE_DB='EscreveAIHandlesDB';
+const VERSION='2.4',APP='EscreveAI',JSON_NAME='EscreveAI_dados.json',CACHE_DB='EscreveAICacheDB',HANDLE_DB='EscreveAIHandlesDB';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const PRESETS={romanceBR:{label:'Romance BR · 14 × 21 cm',widthMm:140,heightMm:210,fontFamily:'Georgia,serif',fontSizePt:11,lineHeight:1.5,marginTopMm:18,marginBottomMm:18,marginInnerMm:20,marginOuterMm:15,bleedMm:3,paragraphIndentMm:7,textAlign:'justify'},compact:{label:'Compacto · 12 × 18 cm',widthMm:120,heightMm:180,fontFamily:'Georgia,serif',fontSizePt:10.5,lineHeight:1.45,marginTopMm:16,marginBottomMm:16,marginInnerMm:18,marginOuterMm:14,bleedMm:3,paragraphIndentMm:6,textAlign:'justify'},trade:{label:'Trade · 13,5 × 21 cm',widthMm:135,heightMm:210,fontFamily:'Garamond,Georgia,serif',fontSizePt:11,lineHeight:1.45,marginTopMm:18,marginBottomMm:18,marginInnerMm:19,marginOuterMm:15,bleedMm:3,paragraphIndentMm:7,textAlign:'justify'},large:{label:'Amplo · 16 × 23 cm',widthMm:160,heightMm:230,fontFamily:'Georgia,serif',fontSizePt:11.5,lineHeight:1.5,marginTopMm:20,marginBottomMm:20,marginInnerMm:22,marginOuterMm:17,bleedMm:3,paragraphIndentMm:7,textAlign:'justify'},a5:{label:'A5 · 14,8 × 21 cm',widthMm:148,heightMm:210,fontFamily:'Georgia,serif',fontSizePt:11,lineHeight:1.5,marginTopMm:18,marginBottomMm:18,marginInnerMm:20,marginOuterMm:15,bleedMm:3,paragraphIndentMm:7,textAlign:'justify'}};
 const DEFAULT_CFG={theme:'dark',bookView:'cover',shelfSize:82,writingPreset:'romanceBR',writing:{...PRESETS.romanceBR},readerTheme:'paper',readerNavigation:'page',voiceLang:'pt-BR',voiceRate:1,voicePitch:1,voiceVolume:1,voiceName:'',thumbColumns:4};
@@ -539,7 +601,7 @@ async function finishBookDrag(e){if(!dragState)return;moveBookDrag(e);const st={
 function openMoveChooser(id){const b=state.books.find(x=>x.id===id);if(!b)return;const bg=document.createElement('div');bg.className='tagChooserBackdrop';const box=document.createElement('div');box.className='tagChooser';const add=(label,fn,color='#d8b078')=>{const x=document.createElement('button');x.style.background=color;x.textContent=label;x.onclick=async()=>{bg.remove();await fn();renderLibrary()};box.append(x)};add('Livros em criação',async()=>{b.shelf='creation';b.shelfOrders.creation=Date.now();b.updatedAt=Date.now();await commit()});add('Livros abandonados',async()=>{b.shelf='abandoned';b.shelfOrders.abandoned=Date.now();b.updatedAt=Date.now();await commit()});getTags().forEach((n,i)=>add(`${i+1}. ${n||''}`,async()=>{if(!b.tags.includes(i))b.tags.push(i);b.shelfOrders['tag:'+i]=Date.now();b.updatedAt=Date.now();await commit()},tagColor(i)));const c=document.createElement('button');c.className='minor';c.textContent='Cancelar';c.onclick=()=>bg.remove();box.append(c);bg.append(box);bg.onclick=e=>{if(e.target===bg)bg.remove()};document.body.append(bg)}
 
 async function openAddChoice(){const v=await dialog({title:'Adicionar livro',message:'Como deseja começar?',buttons:[['Cancelar',null],['Livro novo','new','primary'],['Abrir existente','open']]});if(v==='new')createBlankBook();else if(v==='open')openExistingDocuments()}
-async function createBlankBook(){const n=state.books.length+1,b=normalizeBook({id:uid('book'),title:'Novo livro '+n,author:'',shelf:'creation',order:Date.now(),layout:clone(state.cfg.writing),markers:[],pageImages:{},coverSettings:{enabled:false,image:null}});state.books.push(b);await commit({render:true});openWriter(b.id)}
+async function createBlankBook(){const n=state.books.length+1,b=normalizeBook({id:uid('book'),title:'Novo livro '+n,author:'',shelf:'creation',order:Date.now(),addedAt:Date.now(),updatedAt:Date.now(),layout:clone(state.cfg.writing),markers:[],pageImages:{},coverSettings:{enabled:false,image:null}});state.books.push(b);await commit({render:true});openWriter(b.id)}
 async function parseDocument(file){const ext=file.name.split('.').pop().toLowerCase();if(['txt','md','markdown'].includes(ext))return {html:textToHtml(await file.text()),sourceFormat:ext};if(['html','htm'].includes(ext)){const raw=await file.text();return {html:textToHtml(raw),sourceFormat:'html-code'}}if(ext==='rtf'){let t=await file.text();t=t.replace(/\\par[d]?\b/g,'\n').replace(/\\'[0-9a-fA-F]{2}/g,'').replace(/\\[a-z]+-?\d* ?/g,'').replace(/[{}]/g,'');return {html:textToHtml(t),sourceFormat:'rtf'}}if(ext==='doc'){throw Error('DOC clássico (binário) não pode ser editado com segurança no navegador. Converta para DOCX, RTF ou TXT.')}if(ext==='docx'){if(!window.mammoth)throw Error('Componente DOCX ainda não foi carregado.');const r=await mammoth.convertToHtml({arrayBuffer:await file.arrayBuffer()});return {html:r.value||'<p></p>',sourceFormat:'docx'}}if(ext==='odt'){if(!window.JSZip)throw Error('Componente ZIP indisponível.');const z=await JSZip.loadAsync(await file.arrayBuffer()),x=await z.file('content.xml')?.async('string');if(!x)throw Error('ODT sem content.xml.');const d=new DOMParser().parseFromString(x,'application/xml'),pars=[...d.getElementsByTagNameNS('*','p')].map(p=>p.textContent);return {html:textToHtml(pars.join('\n\n')),sourceFormat:'odt'}}if(ext==='epub'){if(!window.JSZip)throw Error('Componente ZIP indisponível.');const z=await JSZip.loadAsync(await file.arrayBuffer()),names=Object.keys(z.files).filter(n=>/\.(xhtml|html|htm)$/i.test(n)&&!z.files[n].dir),chunks=[];for(const n of names.slice(0,120)){const x=await z.file(n).async('string'),d=new DOMParser().parseFromString(x,'text/html');if(d.body?.innerHTML)chunks.push(d.body.innerHTML)}return {html:chunks.join('<hr>')||'<p></p>',sourceFormat:'epub'}}throw Error('Formato não suportado.')}
 async function importDocumentFile(file,handle=null){const r=await parseDocument(file),title=file.name.replace(/\.[^.]+$/,'');const b=normalizeBook({id:uid('book'),title,sourceName:file.name,sourceFormat:r.sourceFormat||file.name.split('.').pop().toLowerCase(),shelf:'creation',order:Date.now(),layout:clone(state.cfg.writing),markers:[{id:uid('marker'),title:'Inicial',version:'Versão 1',status:'published',content:r.html,order:0}]});state.books.push(b);if(handle)sourceHandles.set(b.id,handle);await commit();return b}
 async function openExistingDocuments(){if(window.showOpenFilePicker){try{const hs=await showOpenFilePicker({multiple:true,types:[{description:'Documentos editáveis',accept:{'text/plain':['.txt','.md','.markdown','.rtf'],'text/html':['.html','.htm'],'application/vnd.openxmlformats-officedocument.wordprocessingml.document':['.docx'],'application/vnd.oasis.opendocument.text':['.odt'],'application/epub+zip':['.epub']}}]});let last=null;for(const h of hs){try{last=await importDocumentFile(await h.getFile(),h)}catch(err){toast(h.name+': '+err.message,6000)}}renderLibrary();if(last)openWriter(last.id);return}catch(e){if(e?.name==='AbortError')return}}$('#docFile').click()}
@@ -796,7 +858,7 @@ restoreMarkerPrevious=async function(id){const b=currentBook(),m=b?.markers.find
 // HTML files remain literal from import to editor/export.
 const _parseDocument14=parseDocument;
 parseDocument=async function(file){const ext=file.name.split('.').pop().toLowerCase();if(['html','htm'].includes(ext)){const raw=await file.text();return {html:textToHtml(raw),sourceFormat:'html-code',codeText:raw}}return _parseDocument14(file)};
-importDocumentFile=async function(file,handle=null){const r=await parseDocument(file),title=file.name.replace(/\.[^.]+$/,'');const marker={id:uid('marker'),title:'Inicial',version:'Versão 1',status:'published',content:r.html,order:0};if(r.sourceFormat==='html-code')marker.codeText=r.codeText??htmlToText(r.html);const b=normalizeBook({id:uid('book'),title,sourceName:file.name,sourceFormat:r.sourceFormat||file.name.split('.').pop().toLowerCase(),shelf:'creation',order:Date.now(),layout:clone(state.cfg.writing),markers:[marker]});state.books.push(b);if(handle)sourceHandles.set(b.id,handle);await commit();return b};
+importDocumentFile=async function(file,handle=null){const r=await parseDocument(file),title=file.name.replace(/\.[^.]+$/,'');const marker={id:uid('marker'),title:'Inicial',version:'Versão 1',status:'published',content:r.html,order:0,createdAt:Date.now(),updatedAt:Date.now()};if(r.sourceFormat==='html-code')marker.codeText=r.codeText??htmlToText(r.html);const b=normalizeBook({id:uid('book'),title,sourceName:file.name,sourceFormat:r.sourceFormat||file.name.split('.').pop().toLowerCase(),shelf:'creation',order:Date.now(),addedAt:Date.now(),updatedAt:Date.now(),layout:clone(state.cfg.writing),markers:[marker]});state.books.push(b);if(handle)sourceHandles.set(b.id,handle);await commit();return b};
 rawPublishedText=function(book){if(isHtmlCodeBook14(book))return publishedMarkers(book).map(m=>literalCodeFromStored14(m)).join('\n\n');return publishedMarkers(book).map(m=>htmlToText(m.content).trim()).filter(Boolean).join('\n\n')};
 
 function chapterHeadingHtml14(marker,mode='inline'){if(mode==='subtitle'){const t=(marker.subtitle||'').trim()||marker.title||'';return `<h2 class="chapterHeading subtitleAsTitle">${esc(t)}</h2>`}return `<h2 class="chapterHeading">${esc(marker.title||'')}${marker.subtitle?`<span class="chapterSubtitle">${esc(marker.subtitle)}</span>`:''}</h2>`}
@@ -960,7 +1022,7 @@ function syncAllChildren16(book){for(const m of book?.markers||[])if(m.isChild)s
 
 // New marker no longer uses child as a publication state.
 newMarker=function(status='draft',parent=null){
-  const b=currentBook(),isChild=!!parent,title=parent?.title||nextChapterTitle(b),same=(b.markers||[]).filter(x=>markerTitleKey(x)===String(title).trim().toLocaleLowerCase('pt-BR')),existingGroup=same.map(x=>+x.groupOrder).find(Number.isFinite),maxGroup=Math.max(-1,...(b.markers||[]).map(x=>+x.groupOrder).filter(Number.isFinite)),groupOrder=isChild?(Number.isFinite(+parent.groupOrder)?+parent.groupOrder:groupOrderValue16(b,parent)):(Number.isFinite(existingGroup)?existingGroup:maxGroup+1),m=normalizeMarker({id:uid('marker'),title,version:isChild?childVersion(b,parent):nextVersionForTitle(b,title),status:isChild?'draft':status,isChild,parentMarkerId:isChild?parent.id:null,content:'<p></p>',groupOrder,order:status==='published'&&!isChild?publishedMarkers(b).length:Date.now(),createdAt:Date.now()});
+  const b=currentBook(),isChild=!!parent,title=parent?.title||nextChapterTitle(b),same=(b.markers||[]).filter(x=>markerTitleKey(x)===String(title).trim().toLocaleLowerCase('pt-BR')),existingGroup=same.map(x=>+x.groupOrder).find(Number.isFinite),maxGroup=Math.max(-1,...(b.markers||[]).map(x=>+x.groupOrder).filter(Number.isFinite)),groupOrder=isChild?(Number.isFinite(+parent.groupOrder)?+parent.groupOrder:groupOrderValue16(b,parent)):(Number.isFinite(existingGroup)?existingGroup:maxGroup+1),m=normalizeMarker({id:uid('marker'),title,version:isChild?childVersion(b,parent):nextVersionForTitle(b,title),status:isChild?'draft':status,isChild,parentMarkerId:isChild?parent.id:null,content:'<p></p>',groupOrder,order:status==='published'&&!isChild?publishedMarkers(b).length:Date.now(),createdAt:Date.now(),updatedAt:Date.now()});
   b.markers.push(m);b.updatedAt=Date.now();commit({writer:true});return m
 };
 childVersion=function(book,parent){const x=String(parent.version||'').match(/(\d+)/),base=x?+x[1]:1;const children=book.markers.filter(m=>m.parentMarkerId===parent.id&&m.isChild);return `Versão ${base}.${children.length+1}`};
@@ -1978,7 +2040,7 @@ function promptNewBookMeta114(){
 
 createBlankBook=async function(){
   const meta=await promptNewBookMeta114();if(!meta)return;
-  const b=normalizeBook({id:uid('book'),title:meta.title,author:meta.author,shelf:'creation',order:Date.now(),layout:clone(state.cfg.writing),markers:[],pageImages:{},coverSettings:{enabled:false,image:null}});
+  const b=normalizeBook({id:uid('book'),title:meta.title,author:meta.author,shelf:'creation',order:Date.now(),addedAt:Date.now(),updatedAt:Date.now(),layout:clone(state.cfg.writing),markers:[],pageImages:{},coverSettings:{enabled:false,image:null}});
   state.books.push(b);await commit({render:true});openWriter(b.id);
 };
 
@@ -2204,7 +2266,7 @@ promptNewBookMeta114=function(){
 createBlankBook=async function(){
   const meta=await promptNewBookMeta114();if(!meta)return;
   const title=String(meta.title||'').trim()||nextUntitledBookName116();
-  const b=normalizeBook({id:uid('book'),title,author:String(meta.author||'').trim(),shelf:'creation',order:Date.now(),layout:clone(state.cfg.writing),markers:[],pageImages:{},coverSettings:{enabled:false,image:null}});
+  const b=normalizeBook({id:uid('book'),title,author:String(meta.author||'').trim(),shelf:'creation',order:Date.now(),addedAt:Date.now(),updatedAt:Date.now(),layout:clone(state.cfg.writing),markers:[],pageImages:{},coverSettings:{enabled:false,image:null}});
   state.books.push(b);await commit({render:true});openWriter(b.id);
 };
 
@@ -2619,7 +2681,7 @@ async function sendOneBook22(user,book,remoteMeta=null){
   }else if(book.cloudCoverRemoved22){await deleteCloudCover23(uid,book.id);coverStoredFirestore=false;coverMime=null;coverSize=0}
   else if(old?.coverPath&&!old?.coverStoredFirestore){coverWarning='A capa antiga estava no Cloud Storage e não foi migrada. Se ela ainda estiver no aparelho, envie novamente; o backup JSON completo também a preserva.';coverStoredFirestore=false;coverMime=null;coverSize=0}
   for(let i=0;i<parts.length;i++){const id=prefix+String(i).padStart(4,'0');await timeout20(firebase20.setDoc(cloudPartRef22(ref,id),{data:parts[i],generation,index:i,updatedAt:book.updatedAt||Date.now()}),25000,'A gravação de “'+book.title+'” demorou demais.')}
-  const meta={id:String(book.id),title:book.title||'',author:book.author||'',shelf:book.shelf||'creation',tags:Array.isArray(book.tags)?book.tags:[],order:Number(book.order)||0,updatedAt:book.updatedAt||Date.now(),generation,chunkCount:parts.length,contentLength:raw.length,coverStoredFirestore,coverPath:null,coverMime,coverSize,coverWarning:coverWarning||null,pageImagesExcluded:true,version:VERSION,savedAt:new Date().toISOString()};
+  const meta={id:String(book.id),title:book.title||'',author:book.author||'',shelf:book.shelf||'creation',tags:Array.isArray(book.tags)?book.tags:[],order:Number(book.order)||0,updatedAt:book.updatedAt||Date.now(),generation,chunkCount:parts.length,contentLength:raw.length,contentHash24:hashText22(raw),coverStoredFirestore,coverPath:null,coverMime,coverSize,coverWarning:coverWarning||null,pageImagesExcluded:true,version:VERSION,savedAt:new Date().toISOString()};
   await timeout20(firebase20.setDoc(ref,meta),20000,'Não foi possível finalizar o backup de “'+book.title+'”.');
   if(old?.generation&&old.generation!==generation){const count=Math.max(0,Number(old.chunkCount)||0);for(let i=0;i<count;i++)firebase20.deleteDoc(cloudPartRef22(ref,String(old.generation)+'_'+String(i).padStart(4,'0'))).catch(()=>{})}
   if(book.cloudCoverRemoved22)book.cloudCoverRemoved22=false;
@@ -2999,6 +3061,552 @@ pageSignature22=function(book){
 document.addEventListener('click',e=>{if(e.target.closest('#removeCover')){const id=$('#editBookSelect')?.value,book=state.books.find(x=>x.id===id);if(book){book.cloudCoverRemoved22=true;book.updatedAt=Date.now()}}if(e.target.closest('#removeCoverInWriter')){const book=currentBook();if(book){book.cloudCoverRemoved22=true;book.updatedAt=Date.now()}}},true);
 // Desktop mouse affordance: book cards explicitly advertise the existing hold-to-drag gesture.
 
+
+
+// ===== EscreveAI 2.4 — data de criação confiável =====
+const normalizeMarkerBase24=normalizeMarker;
+normalizeMarker=function(m,i=0){
+  const raw=m||{},n=normalizeMarkerBase24(raw,i);
+  n.createdAtKnown24=raw.createdAtKnown24===false?false:!!raw.createdAt;
+  n.updatedAtKnown24=raw.updatedAtKnown24===false?false:!!raw.updatedAt;
+  return n;
+};
+const normalizeBookBase24=normalizeBook;
+normalizeBook=function(b){
+  const raw=b||{},n=normalizeBookBase24(raw);
+  n.createdAtKnown24=raw.createdAtKnown24===false?false:!!raw.addedAt;
+  n.updatedAtKnown24=raw.updatedAtKnown24===false?false:!!raw.updatedAt;
+  return n;
+};
+
+// ===== EscreveAI 2.4 — remove o backup global automático que concorria com o backup por livro =====
+scheduleCloudWrite20=function(){ /* A nuvem passa a ser sincronizada pelo comparador individual da versão 2.4. */ };
+reconcileCloud20=async function(user){
+  if(!firebase20||!user)return;
+  try{
+    cloudStatus20('Conta conectada · verificando os backups individuais…');
+    await reconcileCloud22(user);
+  }catch(e){
+    console.warn('reconcile cloud 2.4',e);
+    cloudStatus20('Conta conectada, mas não foi possível consultar os livros: '+firebaseErrorText20(e),true);
+  }finally{syncLoginUi20()}
+};
+logout20=async function(){
+  if(!firebase20||!cloudUser20)return;
+  try{await firebase20.signOut(firebase20.auth);toast('Você saiu da conta. Os dados locais foram mantidos.')}catch(e){setLoginMessage20(firebaseErrorText20(e))}
+};
+
+// Show progress for individual book comparison and transfer.
+(function installCloudControls24(){
+  const send=$('#cloudSendBooks22'),download=$('#cloudDownloadBooks22'),grid=send?.parentElement,status=$('#cloudBooksStatus22');
+  if(!grid||!status)return;
+  for(const btn of [send,download]){
+    if(btn){btn.dataset.tip='Comparar cada livro e enviar ou baixar somente a versão mais recente';btn.title=btn.dataset.tip}
+  }
+  const helper=grid.nextElementSibling;
+  if(helper)helper.textContent='Os dois botões fazem a mesma análise individual: enviam os livros mais recentes do aparelho, baixam os mais recentes da nuvem e ignoram os que já estão iguais.';
+  if(!$('#cloudProgressWrap24')){
+    const wrap=document.createElement('div');wrap.id='cloudProgressWrap24';
+    wrap.innerHTML='<progress id="cloudProgress24" max="100" value="0"></progress><span id="cloudProgressText24">Aguardando sincronização</span>';
+    status.insertAdjacentElement('afterend',wrap);
+  }
+  if(!$('#cloudDeleteAll24')){
+    const row=document.createElement('div');row.className='actions';row.style.marginTop='10px';
+    const btn=document.createElement('button');btn.type='button';btn.id='cloudDeleteAll24';btn.className='btn danger';btn.textContent='Apagar dados da nuvem';btn.dataset.tip='Apagar livros, capas, blocos e configurações da nuvem sem apagar os dados locais';btn.title=btn.dataset.tip;
+    row.append(btn);grid.insertAdjacentElement('afterend',row);
+    const note=document.createElement('div');note.className='small';note.textContent='A exclusão remove apenas os dados do EscreveAI no Firestore desta conta. Livros locais, backup JSON e login permanecem.';row.insertAdjacentElement('afterend',note);
+    btn.onclick=deleteCloudData24;
+  }
+})();
+function setCloudProgress24(done,total,label=''){
+  const wrap=$('#cloudProgressWrap24'),bar=$('#cloudProgress24'),text=$('#cloudProgressText24');
+  if(!wrap||!bar||!text)return;
+  wrap.classList.add('show');bar.max=Math.max(1,total);bar.value=Math.min(Math.max(0,done),Math.max(1,total));
+  text.textContent=label||`${done} de ${total} livro(s) analisado(s)`;
+}
+const setCloudButtonsBase24=setCloudButtons22;
+setCloudButtons22=function(busy){
+  setCloudButtonsBase24(busy);
+  const del=$('#cloudDeleteAll24');if(del)del.disabled=!!busy;
+};
+function cloudBookId24(id){return String(id||'').replace(/[^a-zA-Z0-9_-]/g,'_')}
+function localCloudHash24(book){return hashText22(JSON.stringify(safeCloudBook22(book)))}
+async function readOneBookText24(user,meta){
+  const ref=cloudBookRef22(user.uid,meta.id),count=Math.max(0,Number(meta.chunkCount)||0),gen=String(meta.generation||'');
+  if(!count||!gen)throw Error('Backup incompleto para “'+(meta.title||meta.id)+'”.');
+  const chunks=[];
+  for(let i=0;i<count;i++){
+    const id=gen+'_'+String(i).padStart(4,'0');
+    const snap=await timeout20(firebase20.getDoc(cloudPartRef22(ref,id)),22000,'Não foi possível baixar uma parte de “'+(meta.title||meta.id)+'”.');
+    if(!snap.exists())throw Error('Falta uma parte do backup de “'+(meta.title||meta.id)+'”.');
+    chunks.push(String(snap.data()?.data||''));
+  }
+  const data=JSON.parse(chunks.join(''));
+  if(!data||String(data.id)!==String(meta.id))throw Error('O conteúdo de “'+(meta.title||meta.id)+'” não corresponde ao índice da nuvem.');
+  const book=normalizeBook(data);book.updatedAt=meta.updatedAt||book.updatedAt;book.pageImages={};
+  return book;
+}
+async function cloudCandidateHash24(candidate,cache){
+  const key=candidate.source+':'+candidate.id;
+  if(cache.has(key))return cache.get(key);
+  let hash;
+  if(candidate.source==='remote'){
+    hash=candidate.meta.contentHash24||null;
+    if(!hash){const remoteBook=await readOneBookText24(candidate.user,candidate.meta);hash=localCloudHash24(remoteBook)}
+  }else hash=localCloudHash24(candidate.book);
+  cache.set(key,hash);return hash;
+}
+async function runCloudTask24(fn,label){
+  let last;
+  for(let attempt=0;attempt<2;attempt++){
+    try{return await fn()}catch(e){last=e;const code=String(e?.code||'');if(attempt||/permission-denied|unauthenticated|invalid-argument|not-found/i.test(code))break;await new Promise(r=>setTimeout(r,350))}
+  }
+  throw last||Error(label||'Falha na operação do Firestore.');
+}
+
+// One algorithm is used by both buttons: compare each book and move only the newest copy.
+async function syncCloudBooks24(){
+  if(!cloudUser20)return toast('Entre na sua conta antes de sincronizar os livros.');
+  if(!firebase20?.collection||!firebase20?.getDocs||!firebase20?.Bytes?.fromUint8Array)return toast('O Firebase Firestore ainda não está pronto.');
+  if(cloudBusy22)return;
+  cloudBusy22=true;setCloudButtons22(true);
+  let uploaded=0,downloaded=0,equal=0,conflicts=0,failed=0,migrated=0,coverWarnings=0,settingsDirection='';
+  const localMap=new Map(state.books.map(b=>[String(b.id),b]));
+  const wasWriterOpen=$('#writer').classList.contains('show');
+  const wasEditorOpen=$('#editor').classList.contains('show');
+  const editorIdBefore=editorMarkerId,editorBookIdBefore=currentBookId,editorReturnBefore=editorReturnContext;
+  try{
+    if(editorFlushFrame24){cancelAnimationFrame(editorFlushFrame24);editorFlushFrame24=0;editorInputPending24=false;flushEditorToStateBase24()}
+    cloudBookStatus22('Consultando os livros da nuvem e comparando as datas…');
+    setCloudProgress24(0,1,'Consultando os índices da nuvem…');
+    const uid=cloudUser20.uid;
+    const remoteSnap=await timeout20(firebase20.getDocs(cloudBookCollection22(uid)),30000,'Não foi possível consultar a lista de livros na nuvem.');
+    const remoteMap=new Map();
+    remoteSnap.forEach(d=>{const meta=d.data()||{},id=String(meta.id||d.id);remoteMap.set(id,{meta,docId:d.id})});
+
+    // Read the old whole-state backup only when it has not yet been migrated to individual books.
+    let legacyData=null,legacyManifest=null,legacyResolved=true;
+    try{
+      const manifestSnap=await timeout20(firebase20.getDoc(cloudDoc20(uid,'dados','manifesto')),14000,'Não foi possível verificar o backup global anterior.');
+      legacyManifest=manifestSnap.exists()?manifestSnap.data()||null:null;
+      if(legacyManifest&&!legacyManifest.perBookMigratedAt){
+        legacyData=await getLegacyCloudState22(cloudUser20);
+        if(!legacyData)legacyResolved=false;
+      }
+    }catch(e){legacyResolved=false;console.warn('legacy backup check 2.4',e)}
+    const legacyMap=new Map((legacyData?.books||[]).map(b=>[String(b.id),b]));
+    const allIds=new Set([...localMap.keys(),...remoteMap.keys(),...legacyMap.keys()]);
+    const ids=[...allIds];
+    const total=Math.max(1,ids.length);let done=0;
+    const hashCache=new Map();
+    const downloadedIds=new Set();
+
+    for(let i=0;i<ids.length;i++){
+      const id=ids[i],local=localMap.get(id)||null,remoteEntry=remoteMap.get(id)||null,legacy=legacyMap.get(id)||null;
+      const candidates=[];
+      if(local)candidates.push({source:'local',id,stamp:stamp22(local.updatedAt),book:local});
+      if(remoteEntry)candidates.push({source:'remote',id,stamp:stamp22(remoteEntry.meta.updatedAt),meta:remoteEntry.meta,user:cloudUser20});
+      if(legacy)candidates.push({source:'legacy',id,stamp:stamp22(legacy.updatedAt),book:legacy});
+      if(!candidates.length){done++;setCloudProgress24(done,ids.length,`${done}/${ids.length} livro(s) analisado(s)`);continue}
+      const newestStamp=Math.max(...candidates.map(c=>c.stamp));
+      const newest=candidates.filter(c=>c.stamp===newestStamp);
+      let same=true;
+      if(newest.length>1){
+        const hashes=[];
+        try{for(const c of newest)hashes.push(await cloudCandidateHash24(c,hashCache))}catch(e){failed++;legacyResolved=false;console.warn('Comparação de versões iguais',id,e);same=false}
+        if(hashes.length&&hashes.some(h=>h!==hashes[0]))same=false;
+      }
+      if(!same){
+        conflicts++;
+        cloudBookStatus22(`Conflito em “${local?.title||remoteEntry?.meta?.title||legacy?.title||id}”: as versões têm a mesma data, mas conteúdos diferentes. Nenhuma foi sobrescrita.`);
+        done++;setCloudProgress24(done,ids.length,`${done}/${ids.length} analisado(s) · ${conflicts} conflito(s)`);continue;
+      }
+      const winner=newest[0];
+      try{
+        if(winner.source==='local'){
+          const needsUpload=!remoteEntry||stamp22(remoteEntry.meta.updatedAt)<newestStamp||(!remoteEntry&&legacy);
+          if(needsUpload){
+            cloudBookStatus22(`Enviando ${i+1}/${ids.length}: ${local.title}…`);
+            const next=await runCloudTask24(()=>sendOneBook22(cloudUser20,local,remoteEntry?.meta||null),'Não foi possível enviar '+local.title);
+            remoteMap.set(id,{meta:next,docId:cloudBookId24(id)});uploaded++;
+            if(next.coverWarning)coverWarnings++;
+          }else if(remoteEntry&&local&&(local.coverSettings?.image||local.cover)&&!remoteEntry.meta.coverStoredFirestore){
+            // Migrate a local cover without replacing an already-current cloud text version.
+            try{
+              cloudBookStatus22(`Atualizando somente a capa de “${local.title}”…`);
+              const cov=await uploadCover23(cloudUser20,local,local.coverSettings?.image||local.cover);
+              const patch={coverStoredFirestore:true,coverPath:null,coverMime:cov.mime,coverSize:cov.size,coverWarning:null,coverUpdatedAt:Date.now()};
+              await runCloudTask24(()=>firebase20.setDoc(cloudBookRef22(uid,id),patch,{merge:true}),'Não foi possível atualizar a capa.');
+              remoteEntry.meta={...remoteEntry.meta,...patch};
+            }catch(e){coverWarnings++;console.warn('cover only sync 2.4',id,e)}
+          }else equal++;
+        }else if(winner.source==='remote'){
+          const shouldDownload=!local||stamp22(remoteEntry.meta.updatedAt)>stamp22(local.updatedAt);
+          if(shouldDownload){
+            cloudBookStatus22(`Baixando ${i+1}/${ids.length}: ${remoteEntry.meta.title||id}…`);
+            const restored=await runCloudTask24(()=>readOneBook22(cloudUser20,remoteEntry.meta),'Não foi possível baixar '+(remoteEntry.meta.title||id));
+            if(local){
+              restored.pageImages=local.pageImages||{};
+              if(remoteEntry.meta.coverStoredFirestore&& !restored.cover && (local.coverSettings?.image||local.cover)){
+                const cover=local.coverSettings?.image||local.cover;restored.cover=cover;restored.coverSettings={...(restored.coverSettings||{}),image:cover};
+              }
+            }
+            localMap.set(id,restored);downloadedIds.add(id);downloaded++;
+          }else equal++;
+        }else{
+          // The legacy global backup is newer. Migrate it into the per-book layout and keep local page images.
+          const title=legacy.title||local?.title||id;
+          cloudBookStatus22(`Migrando versão mais recente do backup anterior: ${title}…`);
+          const meta=await runCloudTask24(()=>sendOneBook22(cloudUser20,legacy,remoteEntry?.meta||null),'Não foi possível migrar '+title);
+          remoteMap.set(id,{meta,docId:cloudBookId24(id)});migrated++;
+          const restored=normalizeBook(legacy);
+          if(local)restored.pageImages=local.pageImages||{};
+          localMap.set(id,restored);downloadedIds.add(id);downloaded++;
+          if(meta.coverWarning)coverWarnings++;
+        }
+      }catch(e){failed++;legacyResolved=false;console.warn('sync book 2.4',id,e);cloudBookStatus22(`Falha ao sincronizar “${local?.title||remoteEntry?.meta?.title||legacy?.title||id}”: ${firebaseErrorText20(e)}`,true)}
+      done++;setCloudProgress24(done,ids.length,`${done}/${ids.length} livro(s) analisado(s) · ${uploaded} enviado(s) · ${downloaded} recebido(s)`);
+    }
+
+    // Synchronize settings/tags by their own timestamp, without replacing newer book data.
+    try{
+      const settingsRef=cloudSettingsRef22(uid),settingsSnap=await timeout20(firebase20.getDoc(settingsRef),18000,'Não foi possível consultar as configurações da nuvem.');
+      const remoteSettings=settingsSnap.exists()?settingsSnap.data()||null:null;
+      const legacySettings=legacyData?{cfg:legacyData.cfg,tags:legacyData.tags,updatedAt:legacyData.cfg?.updatedAt||legacyData.updatedAt}:null;
+      const localSettings={cfg:state.cfg,tags:state.tags,updatedAt:state.cfg?.updatedAt||state.updatedAt};
+      const opts=[{source:'local',value:localSettings,stamp:stamp22(localSettings.updatedAt)}];
+      if(remoteSettings)opts.push({source:'remote',value:remoteSettings,stamp:stamp22(remoteSettings.updatedAt)});
+      if(legacySettings)opts.push({source:'legacy',value:legacySettings,stamp:stamp22(legacySettings.updatedAt)});
+      const maxStamp=Math.max(...opts.map(x=>x.stamp)),latest=opts.filter(x=>x.stamp===maxStamp);
+      let valuesMatch=true;
+      if(latest.length>1){const base=hashText22(JSON.stringify(latest[0].value.cfg||{})+'|'+JSON.stringify(latest[0].value.tags||{}));for(const x of latest.slice(1)){const h=hashText22(JSON.stringify(x.value.cfg||{})+'|'+JSON.stringify(x.value.tags||{}));if(h!==base)valuesMatch=false}}
+      if(!valuesMatch){conflicts++;settingsDirection='Configurações com datas iguais e conteúdos diferentes foram preservadas sem sobrescrita.'}
+      else{
+        const winner=latest[0];
+        if(winner.source==='local'&&(!remoteSettings||maxStamp>stamp22(remoteSettings.updatedAt))){
+          await timeout20(firebase20.setDoc(settingsRef,{cfg:clone(state.cfg),tags:clone(state.tags),updatedAt:localSettings.updatedAt||new Date().toISOString(),version:VERSION,savedAt:new Date().toISOString()}),22000,'Não foi possível enviar as configurações.');settingsDirection='Configurações enviadas.';
+        }else if(winner.source==='remote'&&(!localSettings||maxStamp>stamp22(localSettings.updatedAt))){
+          if(remoteSettings.cfg)state.cfg={...clone(DEFAULT_CFG),...(remoteSettings.cfg||{}),updatedAt:remoteSettings.updatedAt,writing:{...clone(DEFAULT_CFG.writing),...(remoteSettings.cfg?.writing||{})}};
+          if(remoteSettings.tags)state.tags=clone(remoteSettings.tags);settingsDirection='Configurações baixadas.';
+        }else if(winner.source==='legacy'){
+          const cfg=legacySettings.cfg||state.cfg,tags=legacySettings.tags||state.tags;
+          if(!remoteSettings||maxStamp>stamp22(remoteSettings.updatedAt))await timeout20(firebase20.setDoc(settingsRef,{cfg:clone(cfg),tags:clone(tags),updatedAt:legacySettings.updatedAt||new Date().toISOString(),version:VERSION,savedAt:new Date().toISOString()}),22000,'Não foi possível migrar as configurações antigas.');
+          if(maxStamp>stamp22(localSettings.updatedAt)){state.cfg={...clone(DEFAULT_CFG),...(cfg||{}),updatedAt:legacySettings.updatedAt,writing:{...clone(DEFAULT_CFG.writing),...(cfg?.writing||{})}};state.tags=clone(tags)}
+          settingsDirection='Configurações do backup anterior migradas.';
+        }else settingsDirection='Configurações já atualizadas.';
+      }
+    }catch(e){failed++;legacyResolved=false;console.warn('sync settings 2.4',e);settingsDirection='Não foi possível sincronizar as configurações: '+firebaseErrorText20(e)}
+
+    // Mark the old manifest migrated only when all its books have been resolved.
+    if(legacyData&&legacyManifest&&!legacyManifest.perBookMigratedAt&&legacyResolved&&failed===0&&conflicts===0){
+      await firebase20.setDoc(cloudDoc20(uid,'dados','manifesto'),{perBookMigratedAt:Date.now(),perBookBookCount:remoteMap.size,perBookMigratedBy:'EscreveAI 2.4'},{merge:true}).catch(e=>console.warn('legacy manifest 2.4',e));
+    }
+
+    state.books=[...localMap.values()];state.version=VERSION;state.updatedAt=new Date().toISOString();state=normalizeState(state);
+    await cacheSave();if(folderHandle)scheduleJsonWrite();
+    if(wasWriterOpen){renderWriter();if(wasEditorOpen&&editorBookIdBefore===currentBookId&&downloadedIds.has(String(editorBookIdBefore))&&editorIdBefore){openEditor(editorIdBefore,{returnTo:editorReturnBefore||'writer'})}}
+    renderLibrary();
+    const summary=`Sincronização concluída: ${uploaded} enviado(s), ${downloaded} recebido(s), ${equal} sem alteração, ${migrated} migrado(s) do backup antigo, ${failed} falha(s), ${conflicts} conflito(s).`;
+    cloudBookStatus22(summary+(coverWarnings?` ${coverWarnings} capa(s) não foram atualizadas.`:'')+(settingsDirection?' '+settingsDirection:''),failed>0||conflicts>0,failed===0&&conflicts===0);
+    cloudStatus20('Última sincronização individual · '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}));
+    setCloudProgress24(total,total,`${total} livro(s) analisado(s) · ${uploaded} enviado(s) · ${downloaded} recebido(s)`);
+    if(failed||conflicts)toast(`Sincronização concluída com ${failed} falha(s) e ${conflicts} conflito(s). Consulte o status em Dados.`,4500);
+    else toast('Sincronização da nuvem concluída.',3200);
+  }catch(e){
+    console.warn('syncCloudBooks24',e);
+    cloudBookStatus22('A sincronização não foi concluída: '+firebaseErrorText20(e),true);
+    cloudStatus20('Erro na sincronização individual: '+firebaseErrorText20(e),true);
+    toast('Não foi possível sincronizar: '+firebaseErrorText20(e),5200);
+  }finally{cloudBusy22=false;setCloudButtons22(false)}
+}
+sendCloudBooks22=async function(){return syncCloudBooks24()};
+downloadCloudBooks22=async function(){return syncCloudBooks24()};
+
+// Delete all EscreveAI Firestore records for this UID, including known subcollections.
+async function deleteCloudData24(){
+  if(!cloudUser20)return toast('Entre na sua conta antes de apagar os dados da nuvem.');
+  if(cloudBusy22)return;
+  const ok=await ask('Isso apagará permanentemente os livros, textos, versões, marcadores, capas e configurações do EscreveAI na nuvem desta conta. Os dados locais, o backup JSON e a conta Firebase serão preservados. Esta ação não pode ser desfeita.','Apagar dados da nuvem');
+  if(!ok)return;
+  cloudBusy22=true;setCloudButtons22(true);
+  try{
+    const uid=cloudUser20.uid;
+    cloudBookStatus22('Localizando os livros e arquivos da nuvem…');
+    const snap=await timeout20(firebase20.getDocs(cloudBookCollection22(uid)),30000,'Não foi possível consultar os livros para exclusão.');
+    const docs=snap.docs||[];let removed=0,total=docs.length;
+    for(let i=0;i<docs.length;i++){
+      const bookDoc=docs[i],bookId=bookDoc.data()?.id||bookDoc.id,bookRef=bookDoc.ref;
+      cloudBookStatus22(`Apagando arquivos de ${i+1}/${Math.max(1,docs.length)}: ${bookDoc.data()?.title||bookId}…`);
+      // Firestore does not cascade document deletion into subcollections.
+      for(const sub of ['partes','arquivos']){
+        const children=await timeout20(firebase20.getDocs(firebase20.collection(bookRef,sub)),20000,'Não foi possível listar os arquivos de '+bookId+'.');
+        const childDocs=children.docs||[];
+        for(let j=0;j<childDocs.length;j+=8){
+          const batch=childDocs.slice(j,j+8);
+          await Promise.all(batch.map(d=>runCloudTask24(()=>firebase20.deleteDoc(d.ref),'Falha ao apagar arquivo '+d.id)));
+        }
+      }
+      // Covers use the explicit known path even if the list query returned no document.
+      await runCloudTask24(()=>firebase20.deleteDoc(cloudCoverRef23(uid,bookId)),'Falha ao apagar capa de '+bookId).catch(()=>{});
+      await runCloudTask24(()=>firebase20.deleteDoc(bookRef),'Falha ao apagar registro de '+bookId);
+      removed++;setCloudProgress24(i+1,Math.max(1,docs.length),`${i+1}/${docs.length} livro(s) apagado(s)`);
+    }
+    // Remove the old global backup chunks/manifests, settings documents, and profile metadata.
+    for(const sub of ['dados','configuracoes']){
+      const col=await timeout20(firebase20.getDocs(firebase20.collection(firebase20.db,'usuarios',uid,sub)),22000,'Não foi possível listar os dados antigos de '+sub+'.');
+      const arr=col.docs||[];
+      for(let i=0;i<arr.length;i+=8){await Promise.all(arr.slice(i,i+8).map(d=>runCloudTask24(()=>firebase20.deleteDoc(d.ref),'Falha ao apagar '+d.id)))}
+    }
+    await runCloudTask24(()=>firebase20.deleteDoc(firebase20.doc(firebase20.db,'usuarios',uid)),'Falha ao remover os metadados da conta na nuvem.').catch(()=>{});
+    cloudBookStatus22(`Dados do EscreveAI removidos da nuvem. ${removed} livro(s) excluído(s). Os dados deste aparelho e a conta Firebase foram preservados.`,false,true);
+    cloudStatus20('Nuvem limpa · conta ainda conectada');setCloudProgress24(Math.max(1,total),Math.max(1,total),'Exclusão concluída. Nenhum dado local foi alterado.');
+    toast('Dados do EscreveAI apagados da nuvem.');
+  }catch(e){
+    console.warn('deleteCloudData24',e);cloudBookStatus22('A exclusão foi interrompida: '+firebaseErrorText20(e)+'. Execute novamente para remover os registros restantes.',true);toast('Não foi possível concluir a exclusão: '+firebaseErrorText20(e),5200);
+  }finally{cloudBusy22=false;setCloudButtons22(false)}
+}
+
+// ===== EscreveAI 2.4 — leitor de texto no editor e controles de pausa =====
+ICON_PATHS.stats='<path d="M4 19V5M4 19h16"/><path d="M8 16v-5M12 16V7M16 16v-8"/><path d="M7 5h2M11 4h2M15 6h2"/>';
+let bookReaderActive24=false;
+function setReaderIcon24(id,name,label,paused=false){const el=$('#'+id);if(!el)return;setIcon(id,name,label,label);el.classList.toggle('readerPaused24',!!paused);el.setAttribute('aria-label',label);el.title=label}
+function updateBookReaderUi24(paused=false){
+  const icon=paused?'play':bookReaderActive24?'pause':'play';
+  const label=paused?'Continuar leitura':bookReaderActive24?'Pausar leitura':'Iniciar leitura';
+  setReaderIcon24('ttsPause',icon,label,paused);
+  const oldPlay=$('#ttsPlay');if(oldPlay)oldPlay.style.display='none';
+}
+const stopTtsBase24=stopTts;
+stopTts=function(){ttsAuto=false;bookReaderActive24=false;stopTtsBase24();updateBookReaderUi24(false)};
+const speakCurrentPageBase24=speakCurrentPage;
+speakCurrentPage=function(auto=true){
+  stopEditorReader24(true);
+  const hasText=!!String(pageSpeechText()||'').trim();
+  if(!hasText){speakCurrentPageBase24(auto);bookReaderActive24=false;updateBookReaderUi24(false);return}
+  bookReaderActive24=true;
+  speakCurrentPageBase24(auto);
+  const u=ttsUtterance;if(!u){bookReaderActive24=false;updateBookReaderUi24(false);return}
+  const prevStart=u.onstart,prevPause=u.onpause,prevResume=u.onresume,prevEnd=u.onend,prevError=u.onerror;
+  u.onstart=e=>{prevStart?.(e);bookReaderActive24=true;updateBookReaderUi24(false)};
+  u.onpause=e=>{prevPause?.(e);updateBookReaderUi24(true)};
+  u.onresume=e=>{prevResume?.(e);bookReaderActive24=true;updateBookReaderUi24(false)};
+  u.onend=e=>{prevEnd?.(e);if(ttsAuto&&currentPageIndex<currentPages.length-1){bookReaderActive24=true}else{bookReaderActive24=false;updateBookReaderUi24(false)}};
+  u.onerror=e=>{prevError?.(e);bookReaderActive24=false;updateBookReaderUi24(false)};
+  updateBookReaderUi24(false);
+};
+// The single visible control starts, pauses, and resumes the page reader.
+$('#ttsPause').onclick=()=>{
+  if(speechSynthesis?.paused){speechSynthesis.resume();bookReaderActive24=true;updateBookReaderUi24(false);return}
+  if(bookReaderActive24){speechSynthesis.pause();return}
+  speakCurrentPage(true);
+};
+const readerModeBase24=$('#readerModeBtn').onclick;
+$('#readerModeBtn').onclick=()=>{
+  readerModeBase24?.();
+  if($('#ttsBar').classList.contains('show')&&!bookReaderActive24)updateBookReaderUi24(false);
+};
+$('#ttsPlay').style.display='none';
+$('#ttsPause').onclick=()=>{
+  if(speechSynthesis.paused){speechSynthesis.resume();bookReaderActive24=true;updateBookReaderUi24(false)}
+  else if(speechSynthesis.speaking){speechSynthesis.pause();updateBookReaderUi24(true)}
+  else speakCurrentPage(true);
+};
+updateBookReaderUi24(false);
+
+const editorReader24={active:false,paused:false,chunks:[],index:0,utterance:null,markerId:null};
+let editorFlushFrame24=0,editorInputPending24=false;
+function editorReaderUi24(){
+  const bar=$('#editorReaderBar24'),btn=$('#editorReaderToggle24'),stop=$('#editorReaderStop24');if(!bar||!btn||!stop)return;
+  const show=bar.classList.contains('show');
+  setIcon('editorReaderToggle24',editorReader24.active&&!editorReader24.paused?'pause':'play',editorReader24.active&&!editorReader24.paused?'Pausar leitura':editorReader24.paused?'Continuar leitura':'Iniciar leitura');
+  btn.classList.toggle('readerPaused24',!!(editorReader24.active&&editorReader24.paused));
+  setIcon('editorReaderStop24','stop','Parar leitura');stop.disabled=!editorReader24.active;stop.style.opacity=editorReader24.active?'1':'.45';
+  if(show)$('#editor').classList.add('readerShowing24');else $('#editor').classList.remove('readerShowing24');
+}
+function setEditorReaderStatus24(text){const el=$('#editorReaderStatus24');if(el)el.textContent=text}
+function editorSpeechChunks24(text,max=1900){
+  const value=String(text||'').replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim();if(!value)return [];
+  const parts=[];let rest=value;
+  while(rest.length>max){
+    let cut=rest.lastIndexOf('. ',max);cut=Math.max(cut,rest.lastIndexOf('! ',max),rest.lastIndexOf('? ',max),rest.lastIndexOf('; ',max));
+    if(cut<Math.floor(max*.55))cut=rest.lastIndexOf(' ',max);
+    if(cut<1)cut=max;
+    parts.push(rest.slice(0,cut+1).trim());rest=rest.slice(cut+1).trim();
+  }
+  if(rest)parts.push(rest);return parts;
+}
+function applyVoice24(u){
+  const cfg=state.cfg||DEFAULT_CFG;u.lang=cfg.voiceLang==='auto'?'pt-BR':(cfg.voiceLang||'pt-BR');u.rate=Number(cfg.voiceRate)||1;u.pitch=Number(cfg.voicePitch)||1;u.volume=Math.max(0,Math.min(1,Number(cfg.voiceVolume)||1));
+  const voice=voices.find(v=>v.name===cfg.voiceName);if(voice)u.voice=voice;
+}
+function stopEditorReader24(hide=false){
+  editorReader24.active=false;editorReader24.paused=false;editorReader24.chunks=[];editorReader24.index=0;editorReader24.utterance=null;editorReader24.markerId=null;
+  try{window.speechSynthesis?.cancel()}catch{}
+  if(hide)$('#editorReaderBar24')?.classList.remove('show');
+  setEditorReaderStatus24('Leitura parada');editorReaderUi24();
+}
+function speakEditorChunk24(){
+  if(!editorReader24.active)return;
+  if(editorReader24.index>=editorReader24.chunks.length){editorReader24.active=false;editorReader24.paused=false;editorReader24.utterance=null;setEditorReaderStatus24('Leitura concluída');editorReaderUi24();return}
+  const u=new SpeechSynthesisUtterance(editorReader24.chunks[editorReader24.index]);applyVoice24(u);editorReader24.utterance=u;
+  u.onstart=()=>{if(editorReader24.utterance!==u)return;editorReader24.paused=false;setEditorReaderStatus24(`Lendo trecho ${editorReader24.index+1} de ${editorReader24.chunks.length}`);editorReaderUi24()};
+  u.onpause=()=>{if(editorReader24.utterance!==u)return;editorReader24.paused=true;setEditorReaderStatus24('Pausado · pressione Play para continuar');editorReaderUi24()};
+  u.onresume=()=>{if(editorReader24.utterance!==u)return;editorReader24.paused=false;setEditorReaderStatus24(`Lendo trecho ${editorReader24.index+1} de ${editorReader24.chunks.length}`);editorReaderUi24()};
+  u.onend=()=>{if(!editorReader24.active||editorReader24.utterance!==u)return;editorReader24.index++;setTimeout(speakEditorChunk24,35)};
+  u.onerror=e=>{if(!editorReader24.active||editorReader24.utterance!==u)return;if(e.error==='canceled'||e.error==='interrupted')return;editorReader24.active=false;editorReader24.paused=false;setEditorReaderStatus24('Falha na leitura: '+(e.error||'erro de voz'));editorReaderUi24()};
+  speechSynthesis.speak(u);
+}
+function startEditorReader24(){
+  if(!('speechSynthesis'in window)||!window.SpeechSynthesisUtterance)return toast('A leitura em voz alta não está disponível neste navegador.');
+  if(speechSynthesis.speaking||speechSynthesis.paused)stopTts();
+  const editor=$('#editorContent');if(!editor)return;
+  const text=editor.innerText||editor.textContent||'';const chunks=editorSpeechChunks24(text);
+  if(!chunks.length)return toast('Não há texto para ler neste editor.');
+  stopEditorReader24(false);editorReader24.active=true;editorReader24.paused=false;editorReader24.chunks=chunks;editorReader24.index=0;editorReader24.markerId=editorMarkerId;
+  $('#editorReaderBar24').classList.add('show');setEditorReaderStatus24(`Preparando leitura · ${chunks.length} trecho(s)`);editorReaderUi24();
+  setTimeout(speakEditorChunk24,40);
+}
+function toggleEditorReader24(){
+  if(!editorReader24.active){startEditorReader24();return}
+  if(editorReader24.paused){speechSynthesis.resume();editorReader24.paused=false;setEditorReaderStatus24(`Lendo trecho ${editorReader24.index+1} de ${editorReader24.chunks.length}`)}
+  else{speechSynthesis.pause();editorReader24.paused=true;setEditorReaderStatus24('Pausado · pressione Play para continuar')}
+  editorReaderUi24();
+}
+$('#editorReaderBtn24').onclick=()=>{
+  const bar=$('#editorReaderBar24');
+  if(bar.classList.contains('show')) stopEditorReader24(true);
+  else {bar.classList.add('show');setEditorReaderStatus24('Pronto para ler');editorReaderUi24();}
+};
+$('#editorReaderToggle24').onclick=toggleEditorReader24;
+$('#editorReaderStop24').onclick=()=>stopEditorReader24(false);
+// Keep the book timestamp in sync when the first-page cover option changes.
+const firstPageCoverBase24=$('#firstPageCover').onchange;
+$('#firstPageCover').onchange=async e=>{
+  const b=currentBook();if(b)b.updatedAt=Date.now();
+  return firstPageCoverBase24?.call(e.currentTarget,e);
+};
+const openEditorBase24=openEditor;
+openEditor=function(id,opts={}){if(editorReader24.active)stopEditorReader24(true);const r=openEditorBase24(id,opts);return r};
+const closeEditor13Base24=closeEditor13;
+closeEditor13=function(fromHistory=false,target='writer'){stopEditorReader24(true);if(editorFlushFrame24){cancelAnimationFrame(editorFlushFrame24);editorFlushFrame24=0;editorInputPending24=false;flushEditorToStateBase24()}return closeEditor13Base24(fromHistory,target)};
+closeEditor=closeEditor13;
+
+// Defer expensive content serialization to one animation frame; explicit save/back actions still flush immediately.
+const flushEditorToStateBase24=flushEditorToState;
+flushEditorToState=function(){
+  if(editorFlushFrame24){cancelAnimationFrame(editorFlushFrame24);editorFlushFrame24=0}
+  editorInputPending24=false;
+  return flushEditorToStateBase24();
+};
+$('#editorContent').addEventListener('input',e=>{
+  e.stopImmediatePropagation();editorInputPending24=true;
+  if(editorFlushFrame24)return;
+  editorFlushFrame24=requestAnimationFrame(()=>{
+    editorFlushFrame24=0;if(!editorInputPending24)return;editorInputPending24=false;
+    flushEditorToStateBase24();
+    clearTimeout(editorAutosaveTimer);
+    editorAutosaveTimer=setTimeout(async()=>{await commit();$('#autosaveState').textContent='Salvo automaticamente'},520);
+    showSelectionDraftIfAny();
+  });
+},{capture:true});
+
+// Avoid rebuilding the complete marker DOM when returning without any marker changes.
+const renderMarkersBase24=renderMarkers;
+let markerDomBook24='',markerDomSignature24='';
+renderMarkers=function(){
+  const b=currentBook(),out=$('#markersList');if(!b||!out)return;
+  const sig=[b.updatedAt,(b.markers||[]).map(m=>[m.id,m.updatedAt,m.createdAt,m.title,m.subtitle,m.version,m.status,m.order,m.groupOrder,m.groupItemOrder22,m.parentMarkerId,m.content?.length||0,m.isChild?1:0].join(':')).join('|')].join('~');
+  if(markerDomBook24===String(b.id)&&markerDomSignature24===sig&&out.childElementCount){syncMarkerMoveMode17?.();restoreMarkersScroll114?.();return}
+  renderMarkersBase24();markerDomBook24=String(b.id);markerDomSignature24=sig;
+};
+
+// ===== EscreveAI 2.4 — pular diretamente para página ou capítulo =====
+function openPageJump24(){
+  const book=currentBook(),overlay=$('#pageJumpSheet24');if(!book||!overlay)return;
+  const sel=$('#pageJumpChapter24'),input=$('#pageJumpNumber24');
+  sel.innerHTML='<option value="">Selecione um capítulo</option>';
+  for(const m of publishedMarkers(book)){
+    const idx=currentPages.findIndex(p=>String(p.markerId)===String(m.id));if(idx<0)continue;
+    const o=document.createElement('option');o.value=String(idx);o.textContent=(m.title||'Capítulo')+' · página '+(idx+1);sel.append(o);
+  }
+  input.max=String(Math.max(1,currentPages.length));input.value=String(currentPageIndex+1);
+  $('#pageJumpCount24').textContent=`Este livro possui ${currentPages.length} página(s), incluindo eventual capa.`;
+  overlay.classList.add('show');setTimeout(()=>input.focus(),60);
+}
+function jumpToPage24(index){
+  const max=Math.max(1,currentPages.length),n=Math.max(0,Math.min(max-1,Math.floor(Number(index)||0)));
+  stopTts();currentPageIndex=n;highlightSelectedPage();updatePreviewCounter();syncViewSheet();scrollPreviewToPage(false);
+  $('#pageJumpSheet24').classList.remove('show');
+}
+$('#previewCounter').setAttribute('role','button');$('#previewCounter').tabIndex=0;$('#previewCounter').dataset.tip='Ir diretamente para uma página ou capítulo';
+$('#previewCounter').addEventListener('click',openPageJump24);
+$('#previewCounter').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openPageJump24()}});
+$('#pageJumpGoNumber24').onclick=()=>{
+  const max=Math.max(1,currentPages.length),raw=Number($('#pageJumpNumber24').value);
+  if(!Number.isInteger(raw)||raw<1||raw>max)return toast(`Digite uma página entre 1 e ${max}.`);
+  jumpToPage24(raw-1);
+};
+$('#pageJumpGoChapter24').onclick=()=>{
+  const v=$('#pageJumpChapter24').value;if(v==='')return toast('Escolha um capítulo.');
+  jumpToPage24(Number(v));
+};
+
+// ===== EscreveAI 2.4 — estatísticas do livro e de cada capítulo =====
+function dateLabel24(value,known=true){
+  if(!known||!value)return 'Não registrada';
+  const ms=typeof value==='number'?value:Date.parse(value);if(!Number.isFinite(ms)||ms<=0)return 'Não registrada';
+  try{return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(ms))}catch{return new Date(ms).toLocaleString('pt-BR')}
+}
+function textStats24(html){
+  const root=document.createElement('div');root.innerHTML=html||'';
+  const text=(root.innerText||root.textContent||'').replace(/\u00a0/g,' ').trim();
+  let words=[];try{words=text.match(/[\p{L}\p{N}]+(?:[’'\-][\p{L}\p{N}]+)*/gu)||[]}catch{words=text.match(/[A-Za-zÀ-ÿ0-9]+(?:[’'\-][A-Za-zÀ-ÿ0-9]+)*/g)||[]}
+  const blocks=[...root.querySelectorAll('p,li,blockquote,pre,h1,h2,h3,h4,h5,h6')].filter(el=>(el.innerText||el.textContent||'').trim());
+  const paragraphs=blocks.length|| (text?text.split(/\n\s*\n/).filter(x=>x.trim()).length:0);
+  return {text,words:words.length,chars:text.length,charsNoSpace:text.replace(/\s/g,'').length,paragraphs};
+}
+function statsCard24(label,value){return `<div class="statsCard24"><span class="statsLabel24">${esc(label)}</span><div class="statsValue24">${esc(value)}</div></div>`}
+function openBookStats24(){
+  const book=currentBook();if(!book)return;
+  $('#bookStatsTitle24').textContent='Dados do livro';$('#bookStatsSubtitle24').textContent=(book.title||'Sem título')+(book.author?' · '+book.author:'');
+  const host=$('#bookStatsContent24');host.innerHTML='<div class="notice">Calculando páginas e estatísticas dos capítulos…</div>';
+  $('#bookStatsSheet24').classList.add('show');
+  const bookId=book.id;
+  setTimeout(()=>{
+    const live=state.books.find(b=>String(b.id)===String(bookId));if(!live)return;
+    const chapters=publishedMarkers(live),drafts=(live.markers||[]).filter(m=>m.status!=='published'),pages=buildPages(live),pageCounts=new Map();
+    for(const p of pages)if(p.markerId)pageCounts.set(String(p.markerId),(pageCounts.get(String(p.markerId))||0)+1);
+    const chapterData=chapters.map(m=>({marker:m,stats:textStats24(m.content),pages:pageCounts.get(String(m.id))||0}));
+    const totals=chapterData.reduce((a,x)=>({words:a.words+x.stats.words,chars:a.chars+x.stats.chars,charsNoSpace:a.charsNoSpace+x.stats.charsNoSpace,paragraphs:a.paragraphs+x.stats.paragraphs,pages:a.pages+x.pages}),{words:0,chars:0,charsNoSpace:0,paragraphs:0,pages:0});
+    const coverPages=pages.filter(p=>p.cover).length,readMinutes=Math.max(1,Math.ceil(totals.words/200));
+    const summary=`<div class="statsSummary24">${statsCard24('Criado em',dateLabel24(live.addedAt,live.createdAtKnown24!==false))}${statsCard24('Última edição',dateLabel24(live.updatedAt,live.updatedAtKnown24!==false))}${statsCard24('Capítulos publicados',chapterData.length.toLocaleString('pt-BR'))}${statsCard24('Páginas totais',pages.length.toLocaleString('pt-BR'))}${statsCard24('Palavras publicadas',totals.words.toLocaleString('pt-BR'))}${statsCard24('Caracteres',totals.chars.toLocaleString('pt-BR'))}${statsCard24('Caracteres sem espaços',totals.charsNoSpace.toLocaleString('pt-BR'))}${statsCard24('Parágrafos',totals.paragraphs.toLocaleString('pt-BR'))}${statsCard24('Tempo estimado de leitura',readMinutes+' min')}${statsCard24('Rascunhos e outros marcadores',drafts.length.toLocaleString('pt-BR'))}</div>`;
+    host.innerHTML=summary+`<div class="small">As estatísticas de palavras, caracteres e parágrafos consideram os capítulos publicados. A contagem de páginas segue a paginação atual do livro. O tempo de leitura é estimado em 200 palavras por minuto.${coverPages?' Há '+coverPages+' página(s) de capa incluída(s) no total.':''}</div><h3 class="statsSection24">Capítulos</h3>`;
+    if(!chapterData.length){const empty=document.createElement('div');empty.className='notice';empty.textContent='Este livro ainda não possui capítulos publicados.';host.append(empty);return}
+    const allTextDetails=document.createElement('details');allTextDetails.className='statsChapter24';
+    const allTextSummary=document.createElement('summary');allTextSummary.textContent='Texto completo do livro · '+totals.words.toLocaleString('pt-BR')+' palavras';allTextDetails.append(allTextSummary);
+    allTextDetails.addEventListener('toggle',()=>{if(allTextDetails.open&&!allTextDetails.dataset.loaded){const body=document.createElement('div');body.className='statsChapterText24';body.textContent=chapterData.map(x=>(x.marker.title||'Capítulo')+'\n\n'+x.stats.text).join('\n\n');allTextDetails.append(body);allTextDetails.dataset.loaded='1'}});
+    host.append(allTextDetails);
+    for(let i=0;i<chapterData.length;i++){
+      const item=chapterData[i],m=item.marker,details=document.createElement('details');details.className='statsChapter24';
+      const sum=document.createElement('summary'),sumName=document.createElement('span');sumName.textContent=`${i+1}. ${m.title||'Sem título'} · ${m.version||'Versão'}`;
+      const badge=document.createElement('span');badge.className='small';badge.textContent=`${item.pages} página(s)`;sum.append(sumName,badge);details.append(sum);
+      const meta=document.createElement('div');meta.className='statsChapterMeta24';
+      const entries=[['Criado em',dateLabel24(m.createdAt,m.createdAtKnown24!==false)],['Última edição',dateLabel24(m.updatedAt,m.updatedAtKnown24!==false)],['Palavras',item.stats.words.toLocaleString('pt-BR')],['Caracteres',item.stats.chars.toLocaleString('pt-BR')],['Parágrafos',item.stats.paragraphs.toLocaleString('pt-BR')],['Páginas',item.pages.toLocaleString('pt-BR')]];
+      for(const [label,value] of entries){const d=document.createElement('div');d.innerHTML=`${esc(label)}<br><b>${esc(value)}</b>`;meta.append(d)}details.append(meta);
+      details.addEventListener('toggle',()=>{if(details.open&&!details.dataset.loaded){const body=document.createElement('div');body.className='statsChapterText24';body.textContent=item.stats.text||'Este capítulo não possui texto.';details.append(body);details.dataset.loaded='1'}});
+      host.append(details);
+    }
+  },40);
+}
+$('#bookStatsBtn24').onclick=openBookStats24;
+
+// Icons and tooltips for the new controls.
+setIcon('bookStatsBtn24','stats','Dados do livro','Informações e estatísticas do livro');
+setIcon('editorReaderBtn24','volume','Ler texto','Ler o texto deste editor em voz alta');
+setIcon('editorReaderStop24','stop','Parar leitura','Parar leitura');
+ensureButtonTips16?.(document);
+
+
 (async()=>{await cacheLoad();state=normalizeState(state);renderAll();await restoreFolder(false);if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./service-worker.js').catch(()=>{})})();
 })();
 
@@ -3015,7 +3623,7 @@ document.addEventListener('click',e=>{if(e.target.closest('#removeCover')){const
     const firebaseConfig={apiKey:'AIzaSyAIpfzIvlYm5MVCo7m6i0AoBUND6bxlhkk',authDomain:'escreveai-rsp.firebaseapp.com',projectId:'escreveai-rsp',messagingSenderId:'467055641636',appId:'1:467055641636:web:84fe4330f984df8ec9c4b1'};
     const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
     window.initEscreveFirebase20?.({app,auth,db,Bytes,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,signInWithEmailAndPassword,createUserWithEmailAndPassword,onAuthStateChanged,signOut,setPersistence,browserLocalPersistence,doc,getDoc,setDoc,deleteDoc,collection,getDocs});
-  }catch(e){console.error('Firebase 2.3',e);window.firebaseLoadFailed20?.(e?.message||String(e))}
+  }catch(e){console.error('Firebase 2.4',e);window.firebaseLoadFailed20?.(e?.message||String(e))}
 })();
 </script>
 
